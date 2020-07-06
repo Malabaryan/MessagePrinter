@@ -10,5 +10,9 @@ package Controller;
  * @author Bryan Hernandez
  */
 public class MainController {
+
+    void executeCommand(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

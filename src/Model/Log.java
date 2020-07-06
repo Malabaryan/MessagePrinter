@@ -46,5 +46,11 @@ public class Log {
         
         return "";
     }
+
+    public Message getMsg() {
+        return msg;
+    }
+
+    
     
 }
