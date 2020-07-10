@@ -55,7 +55,7 @@ public class UiController {
         return logger;
     }
 
-    public void sendCommand(String text) {
+    /*public void sendCommand(String text) {
         this.controller.executeCommand(text);
     }
 
@@ -106,6 +106,6 @@ public class UiController {
         System.out.println(this.controller.getProcesses().size() + " es la cantidad de procesos");;
         for(String s:this.controller.getProcessesString())
             System.out.println(s);
-     }
+     }*/
     
 }
