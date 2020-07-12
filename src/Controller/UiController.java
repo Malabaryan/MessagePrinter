@@ -8,6 +8,7 @@ package Controller;
 import Model.Logger;
 import Model.Log;
 import Model.Logger;
+import Ui.Help;
 import Ui.Setup;
 import Ui.Window;
 import java.util.ArrayList;
@@ -23,12 +24,15 @@ public class UiController {
     private Window mainWindow;
     private MainController controller;
     private Logger logger;
+    private Help help;
+        
 
     public UiController(MainController controller) {
         this.controller = controller;
         setup = new Setup(this);
         mainWindow = new Window(this);
         logger = new Logger();
+        help = new Help(this);
     }
 
     public Setup getSetup() {
@@ -38,9 +42,17 @@ public class UiController {
     public Window getMainWindow() {
         return mainWindow;
     }
+
+    public Help getHelp() {
+        return help;
+    }
     
     public void showSetup() {
         this.setup.setVisible(true);
+    }
+    
+    public void showHelp() {
+        this.help.setVisible(true);
     }
 
     public void showMainWindow() {

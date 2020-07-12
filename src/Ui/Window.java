@@ -47,7 +47,7 @@ public class Window extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jScrollPane4 = new javax.swing.JScrollPane();
-        txt_selectedprocesses = new javax.swing.JTextArea();
+        txt_monitor = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         btn_update = new javax.swing.JButton();
         combo_processesSelected = new javax.swing.JComboBox<>();
@@ -59,6 +59,12 @@ public class Window extends javax.swing.JFrame {
         txt_allprocesses = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txt_selectedprocesses1 = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -96,15 +102,16 @@ public class Window extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 800));
+        setMaximumSize(new java.awt.Dimension(720, 480));
+        setMinimumSize(new java.awt.Dimension(720, 480));
         getContentPane().setLayout(null);
 
-        txt_selectedprocesses.setColumns(20);
-        txt_selectedprocesses.setRows(5);
-        jScrollPane4.setViewportView(txt_selectedprocesses);
+        txt_monitor.setColumns(20);
+        txt_monitor.setRows(5);
+        jScrollPane4.setViewportView(txt_monitor);
 
         getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(343, 95, 310, 157);
+        jScrollPane4.setBounds(350, 290, 310, 157);
 
         jLabel6.setText("Process");
         getContentPane().add(jLabel6);
@@ -137,9 +144,9 @@ public class Window extends javax.swing.JFrame {
         getContentPane().add(jLabel4);
         jLabel4.setBounds(10, 11, 92, 24);
 
-        jLabel5.setText("Execute");
+        jLabel5.setText("Monitor");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 50, 39, 14);
+        jLabel5.setBounds(350, 270, 36, 14);
 
         jLabel9.setText("All Processes");
         getContentPane().add(jLabel9);
@@ -166,6 +173,31 @@ public class Window extends javax.swing.JFrame {
         jLabel10.setText("Selected Process");
         getContentPane().add(jLabel10);
         jLabel10.setBounds(343, 75, 81, 14);
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 290, 110, 150);
+
+        jLabel7.setText("Execute");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(10, 50, 39, 14);
+
+        txt_selectedprocesses1.setColumns(20);
+        txt_selectedprocesses1.setRows(5);
+        jScrollPane5.setViewportView(txt_selectedprocesses1);
+
+        getContentPane().add(jScrollPane5);
+        jScrollPane5.setBounds(343, 95, 310, 157);
+
+        jLabel8.setText("Queues");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(10, 270, 37, 14);
 
         jMenu1.setText("File");
 
@@ -205,12 +237,12 @@ public class Window extends javax.swing.JFrame {
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         String processSelected = this.combo_processesSelected.getItemAt(combo_processesSelected.getSelectedIndex());
-        this.controller.updateTextField(this.txt_selectedprocesses, this.controller.getLogOf(processSelected).toString());
+        this.controller.updateTextField(this.txt_monitor, this.controller.getLogOf(processSelected).toString());
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void combo_processesSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_processesSelectedActionPerformed
         String processSelected = this.combo_processesSelected.getItemAt(combo_processesSelected.getSelectedIndex());
-        this.controller.updateTextField(this.txt_selectedprocesses, this.controller.getLogOf(processSelected).toString());
+        this.controller.updateTextField(this.txt_monitor, this.controller.getLogOf(processSelected).toString());
         this.controller.updateAll(this.txt_allprocesses);
     }//GEN-LAST:event_combo_processesSelectedActionPerformed
 
@@ -237,10 +269,12 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Help help = new Help(this, true);
-        help.setVisible(true);
+        
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    public void setMonitorText(String text){
+        this.txt_monitor.setText(text);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_update;
@@ -250,7 +284,10 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -262,10 +299,13 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea txt_allprocesses;
     private javax.swing.JTextField txt_command;
-    private javax.swing.JTextArea txt_selectedprocesses;
+    private javax.swing.JTextArea txt_monitor;
+    private javax.swing.JTextArea txt_selectedprocesses1;
     // End of variables declaration//GEN-END:variables
 }
