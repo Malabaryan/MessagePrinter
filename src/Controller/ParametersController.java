@@ -24,10 +24,16 @@ public class ParametersController {
 
     private ParametersController() {
     }
+    
+    public static void defaultParameters(){
+        /*TODO
+         Agregar la definicion de parametros default*/
+    }
 
     public static ParametersController getInstance() {
         if(parametersController == null){
             parametersController = new ParametersController(); 
+            defaultParameters();
         }
         return parametersController;
     }

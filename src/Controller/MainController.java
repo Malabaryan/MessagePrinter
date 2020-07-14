@@ -11,8 +11,13 @@ package Controller;
  */
 public class MainController {
 
-    void executeCommand(String text) {
+    public void executeCommand(String text) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Iterable<String> getProcessesStringArrayList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }
