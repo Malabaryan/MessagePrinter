@@ -51,12 +51,16 @@ public class MainController {
     
     public void addMailbox(Mailbox mailbox){
         mailboxes.add(mailbox);
-        System.out.print(mailboxes.size());
+        System.out.print(mailboxes.size()+ "\n");
+    }
+    
+    public void addProcess(Process process){
+        processes.add(process);
     }
     
     public void sendMessageDirect(Message message){
         messagespostsend.add(message);
-        System.out.print(messagespostsend.size());
+        System.out.print(messagespostsend.size()+ "\n");
     }
     
     public void sendMessageIndirect(Message message){
@@ -69,7 +73,7 @@ public class MainController {
             if(messagespostsend.get(i).getSourceID().equals(ID)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
-                System.out.print(messagespostsend.size());
+                System.out.print(messagespostsend.size() + "\n");
                 return message;
             }
         }
@@ -81,7 +85,7 @@ public class MainController {
             if(messagespostsend.get(i).getDestinationID().equals(ID)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
-                System.out.print(messagespostsend.size());
+                System.out.print(messagespostsend.size() + "\n");
                 return message;
             }
         }
@@ -90,7 +94,15 @@ public class MainController {
     
     public Message receiveMessageIndirect(String ID){
         Mailbox mailbox = getMailbox(ID);
-        System.out.print(" Va por aca ");
+        System.out.print(" Va por aca \n");
         return mailbox.nextMessage();
+    }
+    
+    public void unlockprocess(String ID){
+        for(Process p:processes){
+            if(p.getId().equals(ID)){
+                p.setState(false);
+            }
+        }
     }
 }

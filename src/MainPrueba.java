@@ -34,12 +34,21 @@ public class MainPrueba {
         
         Message message = new Message();
         message.setDestinationID("2");
+        
+        Message message2 = new Message();
+        message.setDestinationID("2");
+        
         Process p1 = new Process("1");
         Process p2 = new Process("2");
+        
+        MainController.getInstance().addProcess(p1);
+        MainController.getInstance().addProcess(p2);
         
         p1.sendMessage(message);
         
         p2.receiveMessage("1");
+        
+        p1.sendMessage(message2);
     }
     
 }
