@@ -52,4 +52,21 @@ public class Mailbox {
         return messagereturn;
     }
     
+    @Override
+    public String toString(){
+        return id;
+    }
+    
+    public String getMessages(){
+        String messages2print = "";
+        for(Message m: queue){
+            messages2print = messages2print 
+                    + "C: " + m.getMessageContent() 
+                    + ",S: " + m.getSourceID() 
+                    + ",D: " + m.getDestinationID()
+                    + "\n";
+        }
+        return messages2print;
+    }
+    
 }
