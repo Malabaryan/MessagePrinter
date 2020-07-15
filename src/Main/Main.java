@@ -25,9 +25,7 @@ public class Main {
         
         /* TEST INFO*/
         
-            Mailbox m = new Mailbox("First Mailbox");
-            controller.addMailbox(m);
-            controller.addProcess(new Model.Process("First Process"));
+
             
         /******************/
         

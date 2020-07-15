@@ -8,6 +8,8 @@ package Controller;
 import Model.Logger;
 import Model.Log;
 import Model.Logger;
+import Ui.AddMailbox;
+import Ui.AddProcess;
 import Ui.Help;
 import Ui.Setup;
 import Ui.Window;
@@ -23,14 +25,17 @@ public class UiController {
     private Setup setup;
     private Window mainWindow;
     private MainController controller;
-    private Logger logger;
     private Help help;
+    private AddProcess addProcess;
+    private AddMailbox addMailbox;
         
 
     public UiController(MainController controller) {
         this.controller = controller;
         setup = new Setup(this);
         help = new Help(this);
+        addProcess = new AddProcess(this);
+        addMailbox = new AddMailbox(this);
     }
 
     public Setup getSetup() {
@@ -49,6 +54,14 @@ public class UiController {
         this.setup.setVisible(true);
     }
     
+    public void showAddProcess() {
+        this.addProcess.setVisible(true);
+    }
+    
+    public void showAddMailbox() {
+        this.addMailbox.setVisible(true);
+    }
+    
     public void showHelp() {
         this.help.setVisible(true);
     }
@@ -63,10 +76,7 @@ public class UiController {
     public MainController getController() {
         return controller;
     }
-    
-    public Logger getLogger() {
-        return logger;
-    }
+   
 
     public void sendCommand(String text) {
         this.controller.executeCommand(text);
@@ -95,6 +105,8 @@ public class UiController {
         ParametersController.setMessageLength(formatSize);
 
     }
+
+    
 
     
 }
