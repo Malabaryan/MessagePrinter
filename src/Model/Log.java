@@ -90,6 +90,12 @@ public class Log {
                 "[" + getProcessId() + "][" : "[") 
                 + getTypeString() + "] : " + details;
     }
+
+    public Message getMsg() {
+        return msg;
+    }
+
+    
     
     public String toString(){
         return toString(true);

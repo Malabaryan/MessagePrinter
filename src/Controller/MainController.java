@@ -14,6 +14,10 @@ import Model.Message;
  * @author Bryan Hernandez
  */
 public class MainController {
+
+    
+    
+
     static MainController maincontroller;
     static ArrayList<Process> processes;
     static ArrayList<Mailbox> mailboxes;
@@ -96,6 +100,14 @@ public class MainController {
         Mailbox mailbox = getMailbox(ID);
         System.out.print(" Va por aca \n");
         return mailbox.nextMessage();
+    }
+  
+  public void executeCommand(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Iterable<String> getProcessesStringArrayList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void unlockprocess(String ID){
