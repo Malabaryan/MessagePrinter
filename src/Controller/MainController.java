@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Model.Log;
+import Model.Logger;
 import java.util.ArrayList;
 import Model.Process;
 import Model.Mailbox;
@@ -102,8 +104,74 @@ public class MainController {
         return mailbox.nextMessage();
     }
   
-  public void executeCommand(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void executeCommand(String text) {
+        String[] commands = text.split("\n");
+        Message msg;
+        for(String str : commands) {
+            String[] subString = str.split("[()]");
+            String[] parameters = subString[1].split(",");
+            if (subString[0].equals("create")){
+                switch(parameters.length){
+                    case 1:
+                        //ADD PROCESS
+                        break;
+                    default:
+                        Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
+                        break;
+                }
+            } else if (subString[0].equals("send")){
+                switch(parameters.length){
+                    case 3:
+                        //SEND COMMAND send(Destination, Source, Message)
+                        msg = new Message(parameters[0], parameters[1], parameters[2]);
+                        if (ParametersController.getAddressing_Send() == ParameterState.Addr_Indirect_Dynamic ||
+                                ParametersController.getAddressing_Send() == ParameterState.Addr_Indirect_Static){
+                            //sendMessageIndirect(msg);
+                        } else {
+                            //sendMessageDirect(msg);
+                        }
+                        break;
+                    case 4:
+                        //SEND COMMAND send(Destination, Source, Message, Priority)
+                        msg = new Message(parameters[0], parameters[1], parameters[2]);
+                        msg.setPriority(Integer.getInteger(parameters[0]));
+                        if (ParametersController.getAddressing_Receive() == ParameterState.Addr_Indirect_Dynamic ||
+                                ParametersController.getAddressing_Receive() == ParameterState.Addr_Indirect_Static){
+                            //sendMessageIndirect(msg);
+                        } else {
+                            //sendMessageDirect(msg);
+                        }
+                        break;
+                    default:
+                        Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
+                        break;
+                }
+            } else if (subString[0].equals("receive")){
+                switch(parameters.length){
+                    case 1:
+                        if (ParametersController.getAddressing_Receive() == ParameterState.Addr_Direct_Receive_Implicit){
+                            //receive
+                        } else {
+                            //ERROR DI
+                        }
+                        break;
+                    case 2:
+                        if (ParametersController.getAddressing_Receive() == ParameterState.Addr_Direct_Receive_Explicit){
+                            //receive
+                        } else {
+                            //ERROR DI
+                        }
+                        break;
+                    default:
+                        Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
+                        break;
+                }
+                //RECIEVE COMMAND
+            } else {
+                //INVALID COMMAND
+            }
+            
+        }
     }
 
     public Iterable<String> getProcessesStringArrayList() {
