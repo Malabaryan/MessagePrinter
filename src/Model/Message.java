@@ -67,6 +67,10 @@ public class Message {
         }
     }
 
+    public void setPriority(int priority){
+        this.priority = priority;
+    }
+    
     public String getDestinationID() {
         return destinationID;
     }
