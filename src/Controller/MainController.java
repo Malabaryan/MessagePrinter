@@ -55,7 +55,7 @@ public class MainController {
     
     public void addMailbox(Mailbox mailbox){
         mailboxes.add(mailbox);
-        System.out.print(mailboxes.size()+ "\n");
+        System.out.println("Amount of Mailboxes: " + mailboxes.size());
     }
     
     public void addProcess(Process process){

@@ -7,6 +7,7 @@ package Main;
 
 import Controller.MainController;
 import Controller.UiController;
+import Model.Mailbox;
 
 /**
  *
@@ -21,6 +22,16 @@ public class Main {
         // TODO code application logic here
         MainController controller = new MainController();
         UiController uiController = new UiController(controller);
+        
+        /* TEST INFO*/
+        
+            Mailbox m = new Mailbox("First Mailbox");
+            controller.addMailbox(m);
+            controller.addProcess(new Model.Process("First Process"));
+            
+        /******************/
+        
+        
         uiController.showSetup();
     }
     

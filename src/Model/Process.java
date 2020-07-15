@@ -152,4 +152,9 @@ public class Process {
     public void setState(Boolean state) {
         this.state = state;
     }
+    
+    @Override
+    public String toString(){
+        return this.getId();
+    }
 }
