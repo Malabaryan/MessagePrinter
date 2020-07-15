@@ -7,9 +7,10 @@ package Controller;
 
 import Model.Logger;
 import Model.Log;
-import Model.Process;
-import UI.Setup;
-import UI.Window;
+import Model.Logger;
+import Ui.Help;
+import Ui.Setup;
+import Ui.Window;
 import java.util.ArrayList;
 import javax.swing.JTextArea;
 
@@ -23,12 +24,15 @@ public class UiController {
     private Window mainWindow;
     private MainController controller;
     private Logger logger;
+    private Help help;
+        
 
     public UiController(MainController controller) {
         this.controller = controller;
         setup = new Setup(this);
         mainWindow = new Window(this);
         logger = new Logger();
+        help = new Help(this);
     }
 
     public Setup getSetup() {
@@ -38,9 +42,17 @@ public class UiController {
     public Window getMainWindow() {
         return mainWindow;
     }
+
+    public Help getHelp() {
+        return help;
+    }
     
     public void showSetup() {
         this.setup.setVisible(true);
+    }
+    
+    public void showHelp() {
+        this.help.setVisible(true);
     }
 
     public void showMainWindow() {
@@ -55,16 +67,14 @@ public class UiController {
         return logger;
     }
 
-    public void sendCommand(String text) {
+    /*public void sendCommand(String text) {
         this.controller.executeCommand(text);
     }
 
     public void updateTextField(JTextArea txt_selectedprocesses, String ID) {
         String fullString = "";
         for(Log log: getLogOf(ID)){
-            fullString = fullString + "[" + log.getTimeStamp() + "]: " 
-                    + log.getText() + " - " + log.getMsg().getSourceID() 
-                    + " to " + log.getMsg().getDestinationID() + "\n";
+            fullString = fullString + log.printLog();
         }
         txt_selectedprocesses.setText(fullString);
     }
@@ -88,24 +98,17 @@ public class UiController {
     public void updateAll(JTextArea txt_allprocesses) {
         String fullString = "";
         for(Log log: logger.getLogger()){
-            fullString = fullString + log.getText() + " --- " + log.getMsg().getSourceID() + " to " + log.getMsg().getDestinationID() + "\n";
+            fullString = fullString + log.printLog();
         }
         txt_allprocesses.setText(fullString);
         
     }
 
-    public void startSimulation(int formatSize, int noProcesses, int spin_maxQueueLenght) {
-        for(int i = 0; i < noProcesses;i++){
-            Process proceso = new Process(Integer.toString(i),this.controller.getMailbox());
-            this.controller.AddProcess(proceso);
-            this.controller.getMailbox().addListReceive(proceso);
-            this.controller.getMailbox().addListSend(proceso);
-        }
+    public void startUpdateSimulation(int formatSize, int noProcesses, int spin_maxQueueLenght) {
         ParametersController.setQueueSize(spin_maxQueueLenght);
         ParametersController.setMessageLength(formatSize);
-        System.out.println(this.controller.getProcesses().size() + " es la cantidad de procesos");;
-        for(String s:this.controller.getProcessesString())
-            System.out.println(s);
-     }
+
+    }
+
     
 }
