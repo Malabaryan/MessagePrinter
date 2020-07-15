@@ -91,12 +91,10 @@ public class Log {
                 + getTypeString() + "] : " + details;
     }
 
-    public Message getMsg() {
+    /*public Message getMsg() {
         return msg;
-    }
+    }*/
 
-    
-    
     public String toString(){
         return toString(true);
     }

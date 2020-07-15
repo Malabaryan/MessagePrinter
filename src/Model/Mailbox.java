@@ -23,6 +23,11 @@ public class Mailbox {
         this.queue = new LinkedList<Message>();
         this.receiveprocess = new ArrayList<Process>();
     }
+    
+    public void addProcessReceive(Process process){
+        this.receiveprocess.add(process);
+        System.out.print(receiveprocess.size());
+    }
 
     public String getId() {
         return id;
