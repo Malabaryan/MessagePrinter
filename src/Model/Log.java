@@ -6,7 +6,6 @@
 package Model;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -14,37 +13,82 @@ import java.util.Date;
  * @author Bryan Hernandez
  */
 public class Log {
+   
+    public enum Type {
+        SEND,
+        RECIEVE,
+        ALERT,
+        ACTION,
+        UNSPECIFIED,
+        ERROR
+    }
     
-    private Message msg;
-    private Date timeStamp;
-    private String text;
-    private LogType type;
+    private String processId = "NA";
+    private Type type = Type.UNSPECIFIED;
+    private Date time;
+    private String details;
 
-    public Log(Message msg, LogType type) {
-        this.msg = msg;
+    public Log(){
+        this.details = "";
+        this.time = new Date();
+    }
+    
+    public Log(Type type){
+        this.details = details;
         this.type = type;
-        this.timeStamp = new Date();
+        this.time = new Date();
+    }
+    
+    public Log(Type type, String processId){
+        this.type = type;
+        this.processId = processId;
+        this.time = new Date();
+    }
+    
+    public Log(String details){
+        this.details = details;
+        this.time = new Date();
+    }
+    
+    public Log(String details, Type type){
+        this.details = details;
+        this.type = type;
+        this.time = new Date();
+    }
+    
+    public Log(String details, Type type, String processId){
+        this.details = details;
+        this.type = type;
+        this.processId = processId;
+        this.time = new Date();
+    }
+    
+    public String getProcessId() {
+        return processId;
     }
 
-    public Log(String text, LogType type) {
-        this.text = text;
-        this.type = type;
-        this.timeStamp = new Date();
+    public Type getType() {
+        return type;
     }
 
+    public Date getTime() {
+        return time;
+    }
 
+    public String getDetails() {
+        return details;
+    }
+    
     public String getTimeStamp() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");   
-        return formatter.format(timeStamp);
+        SimpleDateFormat formatter = new SimpleDateFormat("[HH:mm:ss]");   
+        return formatter.format(getTime());
     }
-    
-    /**
-     * Depends of logType, this method returns a String with the log to print.
-     * @return 
-     */
-    public String printLog(){
         
-        return "";
+    public String toString(boolean showProcessId){
+        return getTimeStamp() 
+                + (showProcessId && !processId.equals("NA") ?  
+                "[" + getProcessId() + "][" : "[") 
+                + getTypeString() + "] : " + details;
     }
 
     public Message getMsg() {
@@ -53,4 +97,16 @@ public class Log {
 
     
     
+    public String toString(){
+        return toString(true);
+    }
+
+    private String getTypeString(){
+        switch (getType()){
+            case UNSPECIFIED:
+                return "UNSPECIFIED LOG TYPE";
+            default:
+                return(getType().name());
+        }
+    }    
 }

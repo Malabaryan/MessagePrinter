@@ -86,4 +86,10 @@ public class Message {
     public void setDestinationID(String destinationID) {
         this.destinationID = destinationID;
     }
+
+    public void setSourceID(String sourceID) {
+        this.sourceID = sourceID;
+    }
+    
+    
 }

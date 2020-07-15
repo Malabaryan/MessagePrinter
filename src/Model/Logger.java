@@ -5,14 +5,46 @@
  */
 package Model;
 
+
+import java.util.ArrayList;
+
 /**
  *
- * @author Bryan Hernandez
+ * @author Kenneth
  */
 public class Logger {
-
-    public Iterable<Log> getLogger() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static Logger instance;
+    private ArrayList<Log> logs;
+    
+    private Logger(){
+        logs = new ArrayList<>();
     }
     
+    public static Logger getInstance(){
+        if(instance == null){
+            instance = new Logger();
+        }
+        return instance;
+    }
+    
+    public void log(Log log) {
+        this.logs.add(log);
+    }
+    
+    public String getAllLogs(){
+        String logString = "";
+        for(Log log : logs){
+            logString += log.toString(true) + "\n";
+        }
+        return logString;
+    }
+    
+    public String getProcessLogs(String processId){
+        String logString = "";
+        for(Log log : logs){
+            if (log.getProcessId().equals(processId))
+                logString += log.toString(false) + "\n";
+        }
+        return logString;
+    }
 }

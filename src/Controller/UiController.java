@@ -67,7 +67,7 @@ public class UiController {
         return logger;
     }
 
-    public void sendCommand(String text) {
+    /*public void sendCommand(String text) {
         this.controller.executeCommand(text);
     }
 
@@ -107,6 +107,7 @@ public class UiController {
     public void startUpdateSimulation(int formatSize, int noProcesses, int spin_maxQueueLenght) {
         ParametersController.setQueueSize(spin_maxQueueLenght);
         ParametersController.setMessageLength(formatSize);
+
     }
 
     
