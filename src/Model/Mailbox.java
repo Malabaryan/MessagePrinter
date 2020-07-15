@@ -23,6 +23,11 @@ public class Mailbox {
         this.queue = new LinkedList<Message>();
         this.receiveprocess = new ArrayList<Process>();
     }
+    
+    public void addProcessReceive(Process process){
+        this.receiveprocess.add(process);
+        System.out.print(receiveprocess.size());
+    }
 
     public String getId() {
         return id;
@@ -45,6 +50,23 @@ public class Mailbox {
         Message messagereturn = queue.poll();
         System.out.print("Tamaño cola: "+queue.size());
         return messagereturn;
+    }
+    
+    @Override
+    public String toString(){
+        return id;
+    }
+    
+    public String getMessages(){
+        String messages2print = "";
+        for(Message m: queue){
+            messages2print = messages2print 
+                    + "C: " + m.getMessageContent() 
+                    + ",S: " + m.getSourceID() 
+                    + ",D: " + m.getDestinationID()
+                    + "\n";
+        }
+        return messages2print;
     }
     
 }
