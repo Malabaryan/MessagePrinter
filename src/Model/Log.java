@@ -90,7 +90,7 @@ public class Log {
                 "[" + getProcessId() + "][" : "[") 
                 + getTypeString() + "] : " + details;
     }
-    
+
     public String toString(){
         return toString(true);
     }
