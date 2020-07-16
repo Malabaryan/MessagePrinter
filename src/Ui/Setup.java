@@ -75,6 +75,8 @@ public class Setup extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         spin_fixed = new javax.swing.JSpinner();
         spin_maxQueueLenght = new javax.swing.JSpinner();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 720));
@@ -350,6 +352,24 @@ public class Setup extends javax.swing.JFrame {
         getContentPane().add(spin_maxQueueLenght);
         spin_maxQueueLenght.setBounds(580, 200, 80, 20);
 
+        jButton1.setText("Add Process");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(440, 470, 250, 23);
+
+        jButton2.setText("Add Mailbox");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(440, 500, 250, 23);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -429,10 +449,22 @@ public class Setup extends javax.swing.JFrame {
         ParametersController.setSyncronization_Send(ParameterState.Sync_Send_NonBlocking);
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.controller.showAddProcess();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.controller.showAddMailbox();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_simulationStart;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -8,6 +8,8 @@ package Controller;
 import Model.Logger;
 import Model.Log;
 import Model.Logger;
+import Ui.AddMailbox;
+import Ui.AddProcess;
 import Ui.Help;
 import Ui.Setup;
 import Ui.Window;
@@ -23,16 +25,17 @@ public class UiController {
     private Setup setup;
     private Window mainWindow;
     private MainController controller;
-    private Logger logger;
     private Help help;
+    private AddProcess addProcess;
+    private AddMailbox addMailbox;
         
 
     public UiController(MainController controller) {
         this.controller = controller;
         setup = new Setup(this);
-        mainWindow = new Window(this);
-        logger = new Logger();
         help = new Help(this);
+        addProcess = new AddProcess(this);
+        addMailbox = new AddMailbox(this);
     }
 
     public Setup getSetup() {
@@ -51,56 +54,49 @@ public class UiController {
         this.setup.setVisible(true);
     }
     
+    public void showAddProcess() {
+        this.addProcess.setVisible(true);
+    }
+    
+    public void showAddMailbox() {
+        this.addMailbox.setVisible(true);
+    }
+    
     public void showHelp() {
         this.help.setVisible(true);
     }
 
     public void showMainWindow() {
+        if(mainWindow == null){
+            mainWindow = new Window(this);
+        }
         this.mainWindow.setVisible(true);
     }
 
     public MainController getController() {
         return controller;
     }
-    
-    public Logger getLogger() {
-        return logger;
-    }
+   
 
-    /*public void sendCommand(String text) {
+    public void sendCommand(String text) {
         this.controller.executeCommand(text);
     }
 
     public void updateTextField(JTextArea txt_selectedprocesses, String ID) {
-        String fullString = "";
-        for(Log log: getLogOf(ID)){
-            fullString = fullString + log.printLog();
-        }
-        txt_selectedprocesses.setText(fullString);
+        
+        txt_selectedprocesses.setText(getLogOf(ID));
     }
 
     
-    public ArrayList<Log> getLogOf(String processID) {
+    public String getLogOf(String processID) {
         ArrayList<Log> logs = new ArrayList();
-        for(Log log: this.logger.getLogger()){
-            if(log.getMsg().getDestinationID().equals(processID)){
-                if(log.getMsg().getDestinationID()  == null || log.getMsg().getSourceID()  == null){
-                    logs.add(log);
-                }
-                else{
-                    logs.add(log);
-                }
-            }
-        }
-        return logs;
+        return Logger.getInstance().getProcessLogs(processID);
+        
     }
 
     public void updateAll(JTextArea txt_allprocesses) {
-        String fullString = "";
-        for(Log log: logger.getLogger()){
-            fullString = fullString + log.printLog();
-        }
-        txt_allprocesses.setText(fullString);
+
+        txt_allprocesses.setText(Logger.getInstance().getAllLogs());
         
     }
 
@@ -109,6 +105,8 @@ public class UiController {
         ParametersController.setMessageLength(formatSize);
 
     }
+
+    
 
     
 }
