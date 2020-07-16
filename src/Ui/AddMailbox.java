@@ -5,6 +5,8 @@
  */
 package Ui;
 
+import Controller.ParameterState;
+import Controller.ParametersController;
 import Controller.UiController;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -127,7 +129,14 @@ public class AddMailbox extends javax.swing.JFrame {
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
-        processesText.add(this.jList1.getSelectedValue());
+        if(ParametersController.getAddressing_Receive()==ParameterState.Addr_Indirect_Static){
+            processesText.clear();
+            processesText.add(this.jList1.getSelectedValue());
+        }
+        else{
+            processesText.add(this.jList1.getSelectedValue());
+        }
+        
         String s = "";
         String toPrint = "";
         Iterator iterator = processesText.iterator();

@@ -259,6 +259,7 @@ public class Window extends javax.swing.JFrame {
         this.txt_allprocesses.setText("");
         this.controller.sendCommand(str);
         this.controller.updateAll(txt_allprocesses);
+        update();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -291,11 +292,18 @@ public class Window extends javax.swing.JFrame {
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // TODO add your handling code here:
-        this.txt_allprocesses.setText(Logger.getInstance().getAllLogs());
+        update();
+        
     }//GEN-LAST:event_btn_updateActionPerformed
 
     public void setMonitorText(String text){
         this.txt_monitor.setText(text);
+    }
+    
+    public void update(){
+        this.txt_allprocesses.setText(Logger.getInstance().getAllLogs());
+        this.txt_selectedprocesses1.setText(Logger.getInstance().getProcessLogs(this.list_processes.getSelectedValue()));
+        this.txt_monitor.setText(this.controller.getController().getMailbox(this.list_mailboxes.getSelectedValue()).getMessages());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
