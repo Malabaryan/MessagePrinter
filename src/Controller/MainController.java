@@ -25,7 +25,7 @@ public class MainController {
     static ArrayList<Mailbox> mailboxes;
     static ArrayList<Message> messagespostsend;
 
-    public MainController() {
+    private MainController() {
         processes = new ArrayList<Process>();
         mailboxes = new ArrayList<Mailbox>();
         messagespostsend = new ArrayList<Message>();
@@ -57,6 +57,7 @@ public class MainController {
     
     public Process getProcess(String ID){
         for(Process p:processes){
+            System.out.println(p.getId());
             if(p.getId().equals(ID)){
                 return p;
             }
@@ -156,8 +157,9 @@ public class MainController {
                         process3.receiveMessage(parameters[0]);
                         break;
                     case 2:
-                        Process process4 = getProcess(parameters[1]);
+                        Process process4 = getProcess(parameters[0]);
                         process4.receiveMessage(parameters[1]);
+                        break;
                     default:
                         Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
                         break;
