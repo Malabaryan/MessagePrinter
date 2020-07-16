@@ -20,6 +20,7 @@ public class Log {
         ALERT,
         ACTION,
         UNSPECIFIED,
+        STATE,
         ERROR
     }
     
