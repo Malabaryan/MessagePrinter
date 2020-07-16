@@ -48,6 +48,15 @@ public class Mailbox {
         System.out.print(queue.size());
     }
     
+    public boolean processBelongs(String ID){
+        for(Process p:receiveprocess){
+            if(p.getId().equals(ID)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public Message nextMessage(){
         Message nextMessage = null;
         for (Message msg : queue){

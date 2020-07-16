@@ -6,6 +6,8 @@
 package Main;
 
 import Controller.MainController;
+import Controller.ParameterState;
+import Controller.ParametersController;
 import Controller.UiController;
 import Model.Mailbox;
 
@@ -20,11 +22,11 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        MainController controller = new MainController();
-        UiController uiController = new UiController(controller);
+        UiController uiController = new UiController(MainController.getInstance());
         
         /* TEST INFO*/
         
+        ParametersController.setAddressing_Receive(ParameterState.Addr_Direct_Receive_Explicit);
 
             
         /******************/

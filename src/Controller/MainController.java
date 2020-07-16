@@ -25,7 +25,7 @@ public class MainController {
     static ArrayList<Mailbox> mailboxes;
     static ArrayList<Message> messagespostsend;
 
-    public MainController() {
+    private MainController() {
         processes = new ArrayList<Process>();
         mailboxes = new ArrayList<Mailbox>();
         messagespostsend = new ArrayList<Message>();
@@ -50,6 +50,16 @@ public class MainController {
         for(Mailbox m:mailboxes){
             if(m.getId().equals(ID)){
                 return m;
+            }
+        }
+        return null;
+    }
+    
+    public Process getProcess(String ID){
+        for(Process p:processes){
+            System.out.println(p.getId());
+            if(p.getId().equals(ID)){
+                return p;
             }
         }
         return null;
@@ -113,7 +123,9 @@ public class MainController {
             if (subString[0].equals("create")){
                 switch(parameters.length){
                     case 1:
-                        //ADD PROCESS
+                        Process process = new Process(parameters[0]);
+                        this.addProcess(process);
+                        Logger.getInstance().log(new Log("Proceso Creado id: "+parameters[0]));
                         break;
                     default:
                         Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
@@ -124,23 +136,15 @@ public class MainController {
                     case 3:
                         //SEND COMMAND send(Destination, Source, Message)
                         msg = new Message(parameters[0], parameters[1], parameters[2]);
-                        if (ParametersController.getAddressing_Send() == ParameterState.Addr_Indirect_Dynamic ||
-                                ParametersController.getAddressing_Send() == ParameterState.Addr_Indirect_Static){
-                            //sendMessageIndirect(msg);
-                        } else {
-                            //sendMessageDirect(msg);
-                        }
+                        Process process = getProcess(parameters[0]);
+                        process.sendMessage(msg);
                         break;
                     case 4:
                         //SEND COMMAND send(Destination, Source, Message, Priority)
                         msg = new Message(parameters[0], parameters[1], parameters[2]);
                         msg.setPriority(Integer.getInteger(parameters[0]));
-                        if (ParametersController.getAddressing_Receive() == ParameterState.Addr_Indirect_Dynamic ||
-                                ParametersController.getAddressing_Receive() == ParameterState.Addr_Indirect_Static){
-                            //sendMessageIndirect(msg);
-                        } else {
-                            //sendMessageDirect(msg);
-                        }
+                        Process process2 = getProcess(parameters[0]);
+                        process2.sendMessage(msg);
                         break;
                     default:
                         Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
@@ -149,18 +153,12 @@ public class MainController {
             } else if (subString[0].equals("receive")){
                 switch(parameters.length){
                     case 1:
-                        if (ParametersController.getAddressing_Receive() == ParameterState.Addr_Direct_Receive_Implicit){
-                            //receive
-                        } else {
-                            //ERROR DI
-                        }
+                        Process process3 = getProcess(parameters[0]);
+                        process3.receiveMessage(parameters[0]);
                         break;
                     case 2:
-                        if (ParametersController.getAddressing_Receive() == ParameterState.Addr_Direct_Receive_Explicit){
-                            //receive
-                        } else {
-                            //ERROR DI
-                        }
+                        Process process4 = getProcess(parameters[0]);
+                        process4.receiveMessage(parameters[1]);
                         break;
                     default:
                         Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
@@ -172,10 +170,6 @@ public class MainController {
             }
             
         }
-    }
-
-    public Iterable<String> getProcessesStringArrayList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void unlockprocess(String ID){
