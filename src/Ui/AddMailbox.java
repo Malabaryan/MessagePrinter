@@ -6,6 +6,10 @@
 package Ui;
 
 import Controller.UiController;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -18,9 +22,20 @@ public class AddMailbox extends javax.swing.JFrame {
      */
     
     private UiController controller;
+    private DefaultListModel processesList;
+    private Set<String> processesText;
 
     public AddMailbox(UiController pController) {
         this.controller = pController;
+        processesList  = new DefaultListModel();
+        processesText = new HashSet<String>();
+        
+        for(Model.Process p: this.controller.getController().getProcesses()){
+            System.out.println(p.toString() + " 41");
+            processesList.addElement(p.toString());
+            System.out.println(p.getId() + " : this is a Process");
+        }
+        
         initComponents();
     }
 
@@ -37,15 +52,10 @@ public class AddMailbox extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<>(processesList);
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(600, 400));
@@ -68,10 +78,17 @@ public class AddMailbox extends javax.swing.JFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(200, 340, 210, 23);
 
+        /*
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        */
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
         });
         jScrollPane1.setViewportView(jList1);
 
@@ -89,36 +106,39 @@ public class AddMailbox extends javax.swing.JFrame {
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(70, 220, 166, 96);
 
-        jLabel3.setText("Process");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(380, 60, 100, 14);
-
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList2);
-
-        getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(380, 80, 100, 130);
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane4.setViewportView(jTextArea2);
-
-        getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(380, 220, 166, 96);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.controller.getController().addMailbox(new Model.Mailbox(this.jTextField1.getText()));
+        String s = "";
+        Iterator iterator = processesText.iterator();
+        while(iterator.hasNext()){
+            s = (String)iterator.next();
+            if(!s.equals("")){
+                this.controller.getController().getMailbox(this.jTextField1.getText())
+                .addProcessReceive(this.controller.getController().getProcess(s));
+            }
+        }
         this.jTextField1.setText("");
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        // TODO add your handling code here:
+        processesText.add(this.jList1.getSelectedValue());
+        String s = "";
+        String toPrint = "";
+        Iterator iterator = processesText.iterator();
+        while(iterator.hasNext()){
+            s = (String)iterator.next();
+            toPrint = toPrint + s + ",";
+        }
+        this.jTextArea1.setText(toPrint);
+        System.out.println(processesText);
+        
+    }//GEN-LAST:event_jList1ValueChanged
 
    
 
@@ -126,15 +146,10 @@ public class AddMailbox extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

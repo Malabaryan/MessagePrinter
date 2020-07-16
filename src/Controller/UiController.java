@@ -31,11 +31,10 @@ public class UiController {
         
 
     public UiController(MainController controller) {
-        this.controller = controller;
+        this.controller = MainController.getInstance();
         setup = new Setup(this);
         help = new Help(this);
         addProcess = new AddProcess(this);
-        addMailbox = new AddMailbox(this);
     }
 
     public Setup getSetup() {
@@ -59,6 +58,7 @@ public class UiController {
     }
     
     public void showAddMailbox() {
+        addMailbox = new AddMailbox(this);
         this.addMailbox.setVisible(true);
     }
     
@@ -74,9 +74,8 @@ public class UiController {
     }
 
     public MainController getController() {
-        return controller;
+        return MainController.getInstance();
     }
-   
 
     public void sendCommand(String text) {
         this.controller.executeCommand(text);

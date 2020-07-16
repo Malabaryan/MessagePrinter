@@ -36,7 +36,8 @@ public class Window extends javax.swing.JFrame {
         processesList  = new DefaultListModel();
         for(Mailbox q: this.controller.getController().getMailboxes()){
             queueList.addElement(q.toString());
-            System.out.println(q.getId() + " : this is a Mailbox");
+            System.out.println(q.getId() + " : this is a Mailbox and has " + q.getReceiveprocess().size() + " processes inside.");
+           
         }
         
         for(Model.Process p: this.controller.getController().getProcesses()){
@@ -140,13 +141,13 @@ public class Window extends javax.swing.JFrame {
 
         jLabel5.setText("Monitor");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(390, 270, 90, 16);
+        jLabel5.setBounds(390, 270, 90, 14);
 
         jLabel9.setText("All Processes");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(10, 75, 79, 16);
+        jLabel9.setBounds(10, 75, 62, 14);
         getContentPane().add(txt_command);
-        txt_command.setBounds(53, 47, 216, 24);
+        txt_command.setBounds(53, 47, 216, 20);
 
         txt_allprocesses.setColumns(20);
         txt_allprocesses.setRows(5);
@@ -162,11 +163,11 @@ public class Window extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(275, 46, 90, 32);
+        jButton1.setBounds(275, 46, 90, 23);
 
         jLabel10.setText("Selected Process");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(390, 80, 101, 16);
+        jLabel10.setBounds(390, 80, 81, 14);
 
         /*
         list_mailboxes.setModel(queueList);
@@ -184,7 +185,7 @@ public class Window extends javax.swing.JFrame {
 
         jLabel7.setText("Execute");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(10, 50, 46, 16);
+        jLabel7.setBounds(10, 50, 39, 14);
 
         txt_selectedprocesses1.setColumns(20);
         txt_selectedprocesses1.setRows(5);
@@ -195,11 +196,11 @@ public class Window extends javax.swing.JFrame {
 
         jLabel8.setText("Queues");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(10, 270, 80, 16);
+        jLabel8.setBounds(10, 270, 80, 14);
 
         jLabel11.setText("Processes");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(190, 270, 80, 16);
+        jLabel11.setBounds(190, 270, 80, 14);
 
         /*
         list_processes.setModel(queueList);
@@ -222,7 +223,7 @@ public class Window extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_update);
-        btn_update.setBounds(280, 20, 90, 32);
+        btn_update.setBounds(280, 20, 90, 23);
 
         jMenu1.setText("File");
 
