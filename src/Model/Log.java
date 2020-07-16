@@ -20,6 +20,7 @@ public class Log {
         ALERT,
         ACTION,
         UNSPECIFIED,
+        STATE,
         ERROR
     }
     
@@ -91,6 +92,10 @@ public class Log {
                 + getTypeString() + "] : " + details;
     }
 
+    /*public Message getMsg() {
+        return msg;
+    }*/
+
     public String toString(){
         return toString(true);
     }
@@ -104,4 +109,3 @@ public class Log {
         }
     }    
 }
-

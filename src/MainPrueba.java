@@ -2,6 +2,7 @@
 import Controller.MainController;
 import Controller.ParameterState;
 import Controller.ParametersController;
+import Model.Logger;
 import Model.Mailbox;
 import Model.Message;
 import Model.Process;
@@ -24,8 +25,10 @@ public class MainPrueba {
     public static void main(String[] args) {
         // TODO code application logic here
         MainController.getInstance();
-        ParametersController.getInstance().setAddressing_Send(ParameterState.Addr_Direct_Send);
-        ParametersController.getInstance().setAddressing_Receive(ParameterState.Addr_Direct_Receive_Explicit);
+        Logger.getInstance();
+        
+        ParametersController.getInstance().setAddressing_Send(ParameterState.Addr_Indirect_Dynamic);
+        ParametersController.getInstance().setAddressing_Receive(ParameterState.Addr_Indirect_Dynamic);
         ParametersController.getInstance().setSyncronization_Send(ParameterState.Sync_Send_Blocking);
         ParametersController.getInstance().setSyncronization_Receive(ParameterState.Sync_Receive_Blocking);
         
@@ -36,19 +39,25 @@ public class MainPrueba {
         message.setDestinationID("2");
         
         Message message2 = new Message();
-        message.setDestinationID("2");
+        message.setDestinationID("m1");
         
         Process p1 = new Process("1");
         Process p2 = new Process("2");
+        
+        m1.addProcessReceive(p2);
         
         MainController.getInstance().addProcess(p1);
         MainController.getInstance().addProcess(p2);
         
         p1.sendMessage(message);
         
-        p2.receiveMessage("1");
+        System.out.print("Tamaño de la cola: "+ m1.getQueue().size());
         
-        p1.sendMessage(message2);
+        p2.receiveMessage("m1");
+        
+        //p1.sendMessage(message2);
+        
+        System.out.print(Logger.getInstance().getAllLogs());
     }
     
 }
