@@ -104,14 +104,13 @@ public class Process {
         if(this.state){
             logger.log(new Log("El proceso esta bloqueado no puede recibir", Log.Type.STATE,this.id));
             System.out.print("El proceso esta bloqueado no puede recibir \n");
-        }
-        else{
+        } else {
             ParameterState sync = ParametersController.getSyncronization_Receive();
             ParameterState syncsend = ParametersController.getSyncronization_Send();
             if(sync == ParameterState.Sync_Receive_Blocking){
                 state = true;
                 System.out.print("El proceso se ha bloqueado recibiendo \n");
-                logger.log(new Log("El proceso esta bloqueado no puede recibir", Log.Type.STATE,this.id));
+                logger.log(new Log("El proceso esta bloqueado", Log.Type.STATE,this.id));
                 Message messagereturn = receiveMessage_Aux(ID);
                 if(messagereturn==null){
                     this.state = true;

@@ -135,13 +135,13 @@ public class MainController {
                 switch(parameters.length){
                     case 3:
                         //SEND COMMAND send(Destination, Source, Message)
-                        msg = new Message(parameters[0], parameters[1], parameters[2]);
+                        msg = new Message(parameters[1], parameters[0], parameters[2]);
                         Process process = getProcess(parameters[0]);
                         process.sendMessage(msg);
                         break;
                     case 4:
                         //SEND COMMAND send(Destination, Source, Message, Priority)
-                        msg = new Message(parameters[0], parameters[1], parameters[2]);
+                        msg = new Message(parameters[1], parameters[0], parameters[2]);
                         msg.setPriority(Integer.getInteger(parameters[0]));
                         Process process2 = getProcess(parameters[0]);
                         process2.sendMessage(msg);
@@ -164,9 +164,8 @@ public class MainController {
                         Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
                         break;
                 }
-                //RECIEVE COMMAND
             } else {
-                //INVALID COMMAND
+                Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
             }
             
         }
