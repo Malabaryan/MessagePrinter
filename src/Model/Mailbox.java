@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Controller.ParameterState;
+import Controller.ParametersController;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,12 +17,12 @@ import java.util.Queue;
  */
 public class Mailbox {
     String id;
-    Queue<Message> queue;
+    ArrayList<Message> queue;
     ArrayList<Process> receiveprocess;
 
     public Mailbox(String id) {
         this.id = id;
-        this.queue = new LinkedList<Message>();
+        this.queue = new ArrayList<Message>();
         this.receiveprocess = new ArrayList<Process>();
     }
     
@@ -33,7 +35,7 @@ public class Mailbox {
         return id;
     }
 
-    public Queue<Message> getQueue() {
+    public ArrayList<Message> getQueue() {
         return queue;
     }
 
@@ -47,9 +49,22 @@ public class Mailbox {
     }
     
     public Message nextMessage(){
-        Message messagereturn = queue.poll();
-        System.out.print("Tamaño cola: "+queue.size());
-        return messagereturn;
+        Message nextMessage = null;
+        for (Message msg : queue){
+            if (ParametersController.getQueueStrategy() == ParameterState.Queue_Priority){
+                if (nextMessage == null || nextMessage.getPriority() < msg.getPriority()){
+                    nextMessage = msg;
+                }
+            } else {
+                nextMessage = msg;
+                break;
+            }
+        }
+        if (nextMessage != null){
+            queue.remove(nextMessage);
+        }
+        System.out.print("Tamaño cola: " + queue.size());
+        return nextMessage;
     }
     
     @Override
