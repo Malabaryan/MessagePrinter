@@ -22,16 +22,20 @@ public class MainController {
     
 
     static MainController maincontroller;
+    
     static ArrayList<Process> processes;
     static ArrayList<Mailbox> mailboxes;
-    static ArrayList<Message> messagespostsend;
     static ArrayList<Printer> printers;
+    
+    static ArrayList<Message> messagespostsend;
+
 
     private MainController() {
         processes = new ArrayList<Process>();
         mailboxes = new ArrayList<Mailbox>();
+        printers = new ArrayList<Printer>();
+        
         messagespostsend = new ArrayList<Message>();
-        printers = new ArrayList();
     }
     
     public static MainController getInstance() {
@@ -45,7 +49,7 @@ public class MainController {
         return processes;
     }
 
-    public static ArrayList<Printer> getPrinters() {
+    public ArrayList<Printer> getPrinters() {
         return printers;
     }
     
@@ -57,6 +61,15 @@ public class MainController {
     public Mailbox getMailbox(String ID){
         for(Mailbox m:mailboxes){
             if(m.getId().equals(ID)){
+                return m;
+            }
+        }
+        return null;
+    }
+    
+    public Printer getPrinter(String ID){
+        for(Printer m: printers){
+            if(m.getID().equals(ID)){
                 return m;
             }
         }
@@ -78,8 +91,14 @@ public class MainController {
         System.out.println("Amount of Mailboxes: " + mailboxes.size());
     }
     
+    public void addPrinter(Printer printer){
+        printers.add(printer);
+        System.out.println("Amount of Printers: " + printers.size());
+    }
+    
     public void addProcess(Process process){
         processes.add(process);
+        System.out.println("Amount of Processes: " + processes.size());
     }
     
     public void sendMessageDirect(Message message){

@@ -9,6 +9,7 @@ import Model.Logger;
 import Model.Log;
 import Model.Logger;
 import Ui.AddMailbox;
+import Ui.AddPrinter;
 import Ui.AddProcess;
 import Ui.Help;
 import Ui.Setup;
@@ -28,6 +29,7 @@ public class UiController {
     private Help help;
     private AddProcess addProcess;
     private AddMailbox addMailbox;
+    private AddPrinter addPrinter;
         
 
     public UiController(MainController controller) {
@@ -61,6 +63,12 @@ public class UiController {
         addMailbox = new AddMailbox(this);
         this.addMailbox.setVisible(true);
     }
+    
+    public void showAddPrinter() {
+        addPrinter = new AddPrinter(this);
+        this.addPrinter.setVisible(true);
+    }
+
     
     public void showHelp() {
         this.help.setVisible(true);
@@ -99,12 +107,13 @@ public class UiController {
         
     }
 
-    public void startUpdateSimulation(int formatSize, int noProcesses, int spin_maxQueueLenght) {
+    public void startUpdateSimulation(int formatSize, int spin_maxQueueLenght) {
         ParametersController.setQueueSize(spin_maxQueueLenght);
         ParametersController.setMessageLength(formatSize);
 
     }
 
+    
     
 
     
