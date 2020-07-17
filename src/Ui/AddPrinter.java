@@ -8,6 +8,7 @@ package Ui;
 import Controller.ParameterState;
 import Controller.ParametersController;
 import Controller.UiController;
+import Model.Printer;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -17,7 +18,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Bryan Hernandez
  */
-public class AddMailbox extends javax.swing.JFrame {
+public class AddPrinter extends javax.swing.JFrame {
 
     /**
      * Creates new form AddMailbox
@@ -25,12 +26,12 @@ public class AddMailbox extends javax.swing.JFrame {
     
     private UiController controller;
     private DefaultListModel processesList;
-    private Set<String> processesText;
+    private Set<String> printersText;
 
-    public AddMailbox(UiController pController) {
+    public AddPrinter(UiController pController) {
         this.controller = pController;
         processesList  = new DefaultListModel();
-        processesText = new HashSet<String>();
+        printersText = new HashSet<String>();
         
         for(Model.Process p: this.controller.getController().getProcesses()){
             System.out.println(p.toString() + " 41");
@@ -52,7 +53,7 @@ public class AddMailbox extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_addPrinter = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>(processesList);
         jLabel2 = new javax.swing.JLabel();
@@ -62,9 +63,7 @@ public class AddMailbox extends javax.swing.JFrame {
         btn_cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(600, 400));
         setMinimumSize(new java.awt.Dimension(600, 400));
-        setPreferredSize(new java.awt.Dimension(600, 400));
         getContentPane().setLayout(null);
 
         jLabel1.setText("ID:");
@@ -73,14 +72,14 @@ public class AddMailbox extends javax.swing.JFrame {
         getContentPane().add(jTextField1);
         jTextField1.setBounds(70, 30, 200, 20);
 
-        jButton1.setText("Add Mailbox");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_addPrinter.setText("Add Printer");
+        btn_addPrinter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_addPrinterActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(70, 340, 210, 23);
+        getContentPane().add(btn_addPrinter);
+        btn_addPrinter.setBounds(70, 340, 210, 23);
 
         /*
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -99,7 +98,7 @@ public class AddMailbox extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(70, 80, 100, 110);
 
-        jLabel2.setText("Process Destination");
+        jLabel2.setText("Process Source");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(70, 60, 200, 14);
 
@@ -121,46 +120,40 @@ public class AddMailbox extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_cancel);
-        btn_cancel.setBounds(300, 340, 200, 23);
+        btn_cancel.setBounds(310, 340, 200, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_addPrinterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addPrinterActionPerformed
         // TODO add your handling code here:
-        this.controller.getController().addMailbox(new Model.Mailbox(this.jTextField1.getText()));
+        this.controller.getController().addPrinter(new Printer(this.jTextField1.getText()));//.addMailbox(new Model.Mailbox(this.jTextField1.getText()));
         String s = "";
-        Iterator iterator = processesText.iterator();
+        Iterator iterator = printersText.iterator();
         while(iterator.hasNext()){
             s = (String)iterator.next();
             if(!s.equals("")){
-                this.controller.getController().getMailbox(this.jTextField1.getText())
+                this.controller.getController().getPrinter(this.jTextField1.getText())//getMailbox()
                 .addProcessReceive(this.controller.getController().getProcess(s));
             }
         }
         this.jTextField1.setText("");
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_addPrinterActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
-        if(ParametersController.getAddressing_Receive()==ParameterState.Addr_Indirect_Static){
-            processesText.clear();
-            processesText.add(this.jList1.getSelectedValue());
-        }
-        else{
-            processesText.add(this.jList1.getSelectedValue());
-        }
-        
+        printersText.add(this.jList1.getSelectedValue());
+
         String s = "";
         String toPrint = "";
-        Iterator iterator = processesText.iterator();
+        Iterator iterator = printersText.iterator();
         while(iterator.hasNext()){
             s = (String)iterator.next();
             toPrint = toPrint + s + ",";
         }
         this.jTextArea1.setText(toPrint);
-        System.out.println(processesText);
+        System.out.println(printersText);
         
     }//GEN-LAST:event_jList1ValueChanged
 
@@ -172,8 +165,8 @@ public class AddMailbox extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_addPrinter;
     private javax.swing.JButton btn_cancel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

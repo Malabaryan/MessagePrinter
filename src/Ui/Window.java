@@ -8,6 +8,7 @@ package Ui;
 import Controller.UiController;
 import Model.Logger;
 import Model.Mailbox;
+import Model.Printer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,20 +48,22 @@ public class Window extends javax.swing.JFrame {
         }
         
         for(Model.Process p: this.controller.getController().getProcesses()){
-            System.out.println(p.toString() + " 41");
+            System.out.println(p.toString());
             processesList.addElement(p.toString());
             System.out.println(p.getId() + " : this is a Process");
         }
         
-        for(Model.Process p: this.controller.getController().getProcesses()){
-            System.out.println(p.toString() + " 41");
-            processesList.addElement(p.toString());
-            System.out.println(p.getId() + " : this is a Process");
+        for(Printer p: this.controller.getController().getPrinters()){
+            System.out.println(p.toString());
+            printerList.addElement(p.toString());
+            System.out.println(p.getID() + " : this is a Printer");
         }
         
         initComponents();
         
-        
+        System.out.println("Amount of Processes: " +  this.controller.getController().getProcesses().size());
+        System.out.println("Amount of Mailboxes: " +  this.controller.getController().getMailboxes().size());
+        System.out.println("Amount of Printers: " +   this.controller.getController().getPrinters().size());
     }
 
     /**
@@ -90,7 +93,6 @@ public class Window extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txt_allprocesses = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         list_mailboxes = new javax.swing.JList<>(queueList);
         jLabel7 = new javax.swing.JLabel();
@@ -101,11 +103,13 @@ public class Window extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         list_processes = new javax.swing.JList<>(processesList);
         btn_update = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_print = new javax.swing.JButton();
         checkbox_selected = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        list_printers = new javax.swing.JList<>(processesList);
+        list_printers = new javax.swing.JList<>(printerList);
+        btn_batchCommands = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -151,8 +155,8 @@ public class Window extends javax.swing.JFrame {
         jMenuBar3.add(jMenu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(720, 480));
-        setMinimumSize(new java.awt.Dimension(720, 480));
+        setMaximumSize(new java.awt.Dimension(720, 600));
+        setMinimumSize(new java.awt.Dimension(720, 600));
         getContentPane().setLayout(null);
 
         txt_monitor.setColumns(20);
@@ -175,7 +179,7 @@ public class Window extends javax.swing.JFrame {
         getContentPane().add(jLabel9);
         jLabel9.setBounds(10, 75, 62, 14);
         getContentPane().add(txt_command);
-        txt_command.setBounds(53, 47, 216, 20);
+        txt_command.setBounds(79, 47, 190, 20);
 
         txt_allprocesses.setColumns(20);
         txt_allprocesses.setRows(5);
@@ -193,10 +197,6 @@ public class Window extends javax.swing.JFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(275, 46, 90, 23);
 
-        jLabel10.setText("Selected Process");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(390, 80, 81, 14);
-
         /*
         list_mailboxes.setModel(queueList);
         */
@@ -213,7 +213,7 @@ public class Window extends javax.swing.JFrame {
 
         jLabel7.setText("Execute");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(10, 50, 39, 14);
+        jLabel7.setBounds(10, 50, 70, 14);
 
         txt_selectedprocesses1.setColumns(20);
         txt_selectedprocesses1.setRows(5);
@@ -251,20 +251,25 @@ public class Window extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_update);
-        btn_update.setBounds(280, 20, 80, 23);
+        btn_update.setBounds(380, 40, 120, 23);
 
-        jButton2.setText("Print");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_print.setText("Print");
+        btn_print.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_printActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(560, 40, 120, 23);
+        getContentPane().add(btn_print);
+        btn_print.setBounds(590, 40, 120, 23);
 
         checkbox_selected.setText("Selected Process");
+        checkbox_selected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkbox_selectedActionPerformed(evt);
+            }
+        });
         getContentPane().add(checkbox_selected);
-        checkbox_selected.setBounds(560, 10, 130, 23);
+        checkbox_selected.setBounds(390, 70, 130, 23);
 
         jLabel12.setText("Printers");
         getContentPane().add(jLabel12);
@@ -283,6 +288,24 @@ public class Window extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane6);
         jScrollPane6.setBounds(250, 290, 100, 150);
+
+        btn_batchCommands.setText("Batch");
+        btn_batchCommands.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_batchCommandsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_batchCommands);
+        btn_batchCommands.setBounds(380, 10, 120, 23);
+
+        jButton2.setText("Add to Queue");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(590, 10, 120, 23);
 
         jMenu1.setText("File");
 
@@ -334,17 +357,7 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Batch files *.btc", "btc"));
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
-            try {
-                String contents = new String(Files.readAllBytes(Paths.get(selectedFile)));
-                this.controller.sendCommand(contents);
-            } catch (IOException ex) {}
-        }
+        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -373,7 +386,7 @@ public class Window extends javax.swing.JFrame {
         new PrinterStatus(this, true).setVisible(true);
     }//GEN-LAST:event_menu_printQueueActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_printActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Specify a file to save");   
@@ -398,11 +411,36 @@ public class Window extends javax.swing.JFrame {
                 java.util.logging.Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_printActionPerformed
 
     private void list_printersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_list_printersValueChanged
         // TODO add your handling code here:
+        this.txt_monitor.setText(this.controller.getController().getPrinter(this.list_printers.getSelectedValue()).getMessages());
     }//GEN-LAST:event_list_printersValueChanged
+
+    private void btn_batchCommandsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batchCommandsActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Batch files *.btc", "btc"));
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
+            try {
+                String contents = new String(Files.readAllBytes(Paths.get(selectedFile)));
+                this.controller.sendCommand(contents);
+            } catch (IOException ex) {}
+        }
+        update();
+    }//GEN-LAST:event_btn_batchCommandsActionPerformed
+
+    private void checkbox_selectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_selectedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkbox_selectedActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void setMonitorText(String text){
         this.txt_monitor.setText(text);
@@ -416,11 +454,12 @@ public class Window extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_batchCommands;
+    private javax.swing.JButton btn_print;
     private javax.swing.JButton btn_update;
     private javax.swing.JCheckBox checkbox_selected;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
