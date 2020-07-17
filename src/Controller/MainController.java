@@ -79,13 +79,14 @@ public class MainController {
     }
     
     public void sendMessageIndirect(Message message){
+        System.out.print("Por aca");
         Mailbox mailbox = getMailbox(message.getDestinationID());
         mailbox.addMessage(message);
     }
     
-    public Message receiveMessageDirectExplicit(String ID){
+    public Message receiveMessageDirectExplicit(String IDS, String IDD){
         for(int i=0;i<messagespostsend.size();i++){
-            if(messagespostsend.get(i).getSourceID().equals(ID)){
+            if(messagespostsend.get(i).getSourceID().equals(IDS) && messagespostsend.get(i).getDestinationID().equals(IDD)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
                 System.out.print(messagespostsend.size() + "\n");
@@ -111,6 +112,10 @@ public class MainController {
         Mailbox mailbox = getMailbox(ID);
         System.out.print(" Va por aca \n");
         return mailbox.nextMessage();
+    }
+
+    public ArrayList<Message> getMessagespostsend() {
+        return messagespostsend;
     }
   
     public void executeCommand(String text) {
