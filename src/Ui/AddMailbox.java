@@ -95,7 +95,7 @@ public class AddMailbox extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(70, 80, 100, 130);
+        jScrollPane1.setBounds(70, 80, 100, 110);
 
         jLabel2.setText("Process");
         getContentPane().add(jLabel2);
