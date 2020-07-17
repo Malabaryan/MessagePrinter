@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import Model.Process;
 import Model.Mailbox;
 import Model.Message;
+import Model.Printer;
 /**
  *
  * @author Bryan Hernandez
@@ -24,11 +25,13 @@ public class MainController {
     static ArrayList<Process> processes;
     static ArrayList<Mailbox> mailboxes;
     static ArrayList<Message> messagespostsend;
+    static ArrayList<Printer> printers;
 
     private MainController() {
         processes = new ArrayList<Process>();
         mailboxes = new ArrayList<Mailbox>();
         messagespostsend = new ArrayList<Message>();
+        printers = new ArrayList();
     }
     
     public static MainController getInstance() {
@@ -41,6 +44,11 @@ public class MainController {
     public ArrayList<Process> getProcesses() {
         return processes;
     }
+
+    public static ArrayList<Printer> getPrinters() {
+        return printers;
+    }
+    
 
     public ArrayList<Mailbox> getMailboxes() {
         return mailboxes;
