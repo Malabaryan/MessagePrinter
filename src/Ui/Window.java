@@ -303,6 +303,7 @@ public class Window extends javax.swing.JFrame {
     public void update(){
         this.txt_allprocesses.setText(Logger.getInstance().getAllLogs());
         this.txt_selectedprocesses1.setText(Logger.getInstance().getProcessLogs(this.list_processes.getSelectedValue()));
+        if (!this.controller.getController().getMailboxes().isEmpty())
         this.txt_monitor.setText(this.controller.getController().getMailbox(this.list_mailboxes.getSelectedValue()).getMessages());
     }
 
