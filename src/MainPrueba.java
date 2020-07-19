@@ -30,30 +30,53 @@ public class MainPrueba {
         ParametersController.getInstance().setAddressing_Send(ParameterState.Addr_Indirect_Dynamic);
         ParametersController.getInstance().setAddressing_Receive(ParameterState.Addr_Indirect_Dynamic);
         ParametersController.getInstance().setSyncronization_Send(ParameterState.Sync_Send_Blocking);
-        ParametersController.getInstance().setSyncronization_Receive(ParameterState.Sync_Receive_Blocking);
+        ParametersController.getInstance().setSyncronization_Receive(ParameterState.Sync_Receive_ProofOfArrival);
         
         Mailbox m1 = new Mailbox("m1");
         MainController.getInstance().addMailbox(m1);
         
         Message message = new Message();
-        message.setDestinationID("2");
+        message.setDestinationID("m1");
         
         Message message2 = new Message();
-        message.setDestinationID("m1");
+        message2.setDestinationID("m1");
         
         Process p1 = new Process("1");
         Process p2 = new Process("2");
+        Process p3 = new Process("3");
         
-        m1.addProcessReceive(p2);
+        MainController.getInstance().getMailbox("m1").addProcessReceive(p1);
+        MainController.getInstance().getMailbox("m1").addProcessReceive(p2);
+        MainController.getInstance().getMailbox("m1").addProcessReceive(p3);
         
         MainController.getInstance().addProcess(p1);
         MainController.getInstance().addProcess(p2);
+        MainController.getInstance().addProcess(p3);
         
         p1.sendMessage(message);
         
-        System.out.print("Tamaño de la cola: "+ m1.getQueue().size());
+        p3.receiveMessage("m1");
         
         p2.receiveMessage("m1");
+        
+        p1.sendMessage(message2);
+        
+        p3.receiveMessage("m1");
+        
+        p2.receiveMessage("m1");
+        
+        
+        //System.out.print("1 Tamaño listilla: "+ MainController.getInstance().getMessagespostsend().size() + "\n");
+        
+        //p2.receiveMessage("1");
+        
+        //System.out.print("2 Tamaño listilla: "+ MainController.getInstance().getMessagespostsend().size() + "\n");
+        
+        //p1.sendMessage(message2);
+        
+        
+        
+        //MainController.getInstance().getProcess("2").receiveMessage("1");
         
         //p1.sendMessage(message2);
         
