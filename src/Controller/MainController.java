@@ -84,7 +84,6 @@ public class MainController {
     
     public Process getProcess(String ID){
         for(Process p:processes){
-            System.out.println(p.getId());
             if(p.getId().equals(ID)){
                 return p;
             }
@@ -94,22 +93,18 @@ public class MainController {
     
     public void addMailbox(Mailbox mailbox){
         mailboxes.add(mailbox);
-        System.out.println("Amount of Mailboxes: " + mailboxes.size());
     }
     
     public void addPrinter(Printer printer){
         printers.add(printer);
-        System.out.println("Amount of Printers: " + printers.size());
     }
     
     public void addProcess(Process process){
         processes.add(process);
-        System.out.println("Amount of Processes: " + processes.size());
     }
     
     public void sendMessageDirect(Message message){
         messagespostsend.add(message);
-        System.out.print(messagespostsend.size()+ "\n");
     }
     
     public boolean sendMessageIndirect(Message message){
@@ -130,7 +125,6 @@ public class MainController {
             if(messagespostsend.get(i).getSourceID().equals(IDS) && messagespostsend.get(i).getDestinationID().equals(IDD)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
-                System.out.print(messagespostsend.size() + "\n");
                 return message;
             }
         }
@@ -142,7 +136,6 @@ public class MainController {
             if(messagespostsend.get(i).getDestinationID().equals(ID)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
-                System.out.print(messagespostsend.size() + "\n");
                 return message;
             }
         }
@@ -151,7 +144,6 @@ public class MainController {
     
     public Message receiveMessageIndirect(String ID){
         Mailbox mailbox = getMailbox(ID);
-        System.out.print(" Va por aca \n");
         return mailbox.nextMessage();
     }
 
