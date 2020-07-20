@@ -76,6 +76,7 @@ public class Setup extends javax.swing.JFrame {
         btn_addProcess = new javax.swing.JButton();
         btn_addMailbox = new javax.swing.JButton();
         btn_addPrinter = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 720));
@@ -369,6 +370,15 @@ public class Setup extends javax.swing.JFrame {
         getContentPane().add(btn_addPrinter);
         btn_addPrinter.setBounds(440, 440, 250, 23);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(440, 580, 73, 40);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -463,6 +473,11 @@ public class Setup extends javax.swing.JFrame {
         this.controller.showAddPrinter();
     }//GEN-LAST:event_btn_addPrinterActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new SetupHelp(this,true).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -470,6 +485,7 @@ public class Setup extends javax.swing.JFrame {
     private javax.swing.JButton btn_addPrinter;
     private javax.swing.JButton btn_addProcess;
     private javax.swing.JButton btn_simulationStart;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -53,6 +53,12 @@ public class MainController {
         return printers;
     }
     
+    public void printAll(){
+        for (Printer printer : printers){
+            printer.print();
+        }
+    }
+    
 
     public ArrayList<Mailbox> getMailboxes() {
         return mailboxes;
@@ -78,7 +84,6 @@ public class MainController {
     
     public Process getProcess(String ID){
         for(Process p:processes){
-            System.out.println(p.getId());
             if(p.getId().equals(ID)){
                 return p;
             }
@@ -88,28 +93,31 @@ public class MainController {
     
     public void addMailbox(Mailbox mailbox){
         mailboxes.add(mailbox);
-        System.out.println("Amount of Mailboxes: " + mailboxes.size());
     }
     
     public void addPrinter(Printer printer){
         printers.add(printer);
-        System.out.println("Amount of Printers: " + printers.size());
     }
     
     public void addProcess(Process process){
         processes.add(process);
-        System.out.println("Amount of Processes: " + processes.size());
     }
     
     public void sendMessageDirect(Message message){
         messagespostsend.add(message);
-        System.out.print(messagespostsend.size()+ "\n");
     }
     
-    public void sendMessageIndirect(Message message){
-        System.out.print("Por aca");
+    public boolean sendMessageIndirect(Message message){
         Mailbox mailbox = getMailbox(message.getDestinationID());
-        mailbox.addMessage(message);
+        if(mailbox.getSize()>=ParametersController.getQueueSize()){
+            Logger logger = Logger.getInstance();
+            logger.log(new Log("El tamaño de la cola llego al limite", Log.Type.ERROR,mailbox.getId()));
+            return false;
+        }
+        else{
+            mailbox.addMessage(message);
+            return true;
+        }
     }
     
     public Message receiveMessageDirectExplicit(String IDS, String IDD){
@@ -117,7 +125,6 @@ public class MainController {
             if(messagespostsend.get(i).getSourceID().equals(IDS) && messagespostsend.get(i).getDestinationID().equals(IDD)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
-                System.out.print(messagespostsend.size() + "\n");
                 return message;
             }
         }
@@ -129,7 +136,6 @@ public class MainController {
             if(messagespostsend.get(i).getDestinationID().equals(ID)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
-                System.out.print(messagespostsend.size() + "\n");
                 return message;
             }
         }
@@ -138,7 +144,6 @@ public class MainController {
     
     public Message receiveMessageIndirect(String ID){
         Mailbox mailbox = getMailbox(ID);
-        System.out.print(" Va por aca \n");
         return mailbox.nextMessage();
     }
 
@@ -150,6 +155,10 @@ public class MainController {
         String[] commands = text.split("\n");
         Message msg;
         for(String str : commands) {
+            if (commands.length < 2) {
+                Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
+                break;
+            }
             String[] subString = str.split("[()]");
             String[] parameters = subString[1].split(",");
             if (subString[0].equals("create")){
