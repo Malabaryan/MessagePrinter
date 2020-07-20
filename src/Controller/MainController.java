@@ -53,6 +53,12 @@ public class MainController {
         return printers;
     }
     
+    public void printAll(){
+        for (Printer printer : printers){
+            printer.print();
+        }
+    }
+    
 
     public ArrayList<Mailbox> getMailboxes() {
         return mailboxes;
@@ -157,6 +163,10 @@ public class MainController {
         String[] commands = text.split("\n");
         Message msg;
         for(String str : commands) {
+            if (commands.length < 2) {
+                Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
+                break;
+            }
             String[] subString = str.split("[()]");
             String[] parameters = subString[1].split(",");
             if (subString[0].equals("create")){
