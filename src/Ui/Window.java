@@ -47,11 +47,8 @@ public class Window extends javax.swing.JFrame {
            
         }
         
-        for(Model.Process p: this.controller.getController().getProcesses()){
-            System.out.println(p.toString());
-            processesList.addElement(p.toString());
-            System.out.println(p.getId() + " : this is a Process");
-        }
+        fillProcesses();
+        
         
         for(Printer p: this.controller.getController().getPrinters()){
             System.out.println(p.toString());
@@ -64,6 +61,8 @@ public class Window extends javax.swing.JFrame {
         System.out.println("Amount of Processes: " +  this.controller.getController().getProcesses().size());
         System.out.println("Amount of Mailboxes: " +  this.controller.getController().getMailboxes().size());
         System.out.println("Amount of Printers: " +   this.controller.getController().getPrinters().size());
+        
+        this.list_processes.setSelectedIndex(0);
     }
 
     /**
@@ -110,6 +109,8 @@ public class Window extends javax.swing.JFrame {
         list_printers = new javax.swing.JList<>(printerList);
         btn_batchCommands = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        label_state = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -155,8 +156,8 @@ public class Window extends javax.swing.JFrame {
         jMenuBar3.add(jMenu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(720, 600));
-        setMinimumSize(new java.awt.Dimension(720, 600));
+        setMaximumSize(new java.awt.Dimension(760, 600));
+        setMinimumSize(new java.awt.Dimension(760, 600));
         getContentPane().setLayout(null);
 
         txt_monitor.setColumns(20);
@@ -307,6 +308,14 @@ public class Window extends javax.swing.JFrame {
         getContentPane().add(jButton2);
         jButton2.setBounds(590, 10, 120, 23);
 
+        jLabel1.setText("State:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(580, 80, 50, 14);
+
+        label_state.setText("[State]");
+        getContentPane().add(label_state);
+        label_state.setBounds(620, 80, 80, 14);
+
         jMenu1.setText("File");
 
         jMenuItem1.setText("Print Queue");
@@ -348,11 +357,28 @@ public class Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void fillProcesses(){
+        for(Model.Process p: this.controller.getController().getProcesses()){
+            System.out.println(p.toString());
+            processesList.addElement(p.toString());
+            System.out.println(p.getId() + " : this is a Process");
+        }
+        if(list_processes != null)
+            this.list_processes.setSelectedIndex(0);
+    }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String str = this.txt_command.getText();
         this.txt_allprocesses.setText("");
         this.controller.sendCommand(str);
         this.controller.updateAll(txt_allprocesses);
+        
+        if(this.txt_command.getText().contains("create")){
+            processesList.clear();
+            fillProcesses();
+        }
+        
         update();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -372,6 +398,7 @@ public class Window extends javax.swing.JFrame {
     private void list_processesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_list_processesValueChanged
         // TODO add your handling code here:
         this.txt_selectedprocesses1.setText(Logger.getInstance().getProcessLogs(this.list_processes.getSelectedValue()));
+        update();
     }//GEN-LAST:event_list_processesValueChanged
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
@@ -449,6 +476,16 @@ public class Window extends javax.swing.JFrame {
     public void update(){
         this.txt_allprocesses.setText(Logger.getInstance().getAllLogs());
         this.txt_selectedprocesses1.setText(Logger.getInstance().getProcessLogs(this.list_processes.getSelectedValue()));
+        
+        if(this.controller.getController().getProcess(this.list_processes.getSelectedValue()) != null){
+            if(this.controller.getController().getProcess(this.list_processes.getSelectedValue()).state){
+            label_state.setText("Blocked");
+        }
+        else{
+            label_state.setText("Unblocked");
+        }
+        }
+        
         if (!this.controller.getController().getMailboxes().isEmpty())
         this.txt_monitor.setText(this.controller.getController().getMailbox(this.list_mailboxes.getSelectedValue()).getMessages());
     }
@@ -460,6 +497,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkbox_selected;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
@@ -488,6 +526,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel label_state;
     private javax.swing.JList<String> list_mailboxes;
     private javax.swing.JList<String> list_printers;
     private javax.swing.JList<String> list_processes;
