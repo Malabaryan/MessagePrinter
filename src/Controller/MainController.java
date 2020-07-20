@@ -106,10 +106,17 @@ public class MainController {
         System.out.print(messagespostsend.size()+ "\n");
     }
     
-    public void sendMessageIndirect(Message message){
-        System.out.print("Por aca");
+    public boolean sendMessageIndirect(Message message){
         Mailbox mailbox = getMailbox(message.getDestinationID());
-        mailbox.addMessage(message);
+        if(mailbox.getSize()>=ParametersController.getQueueSize()){
+            Logger logger = Logger.getInstance();
+            logger.log(new Log("El tamaño de la cola llego al limite", Log.Type.ERROR,mailbox.getId()));
+            return false;
+        }
+        else{
+            mailbox.addMessage(message);
+            return true;
+        }
     }
     
     public Message receiveMessageDirectExplicit(String IDS, String IDD){

@@ -87,15 +87,23 @@ public class Process {
             }
             else if(addressing == ParameterState.Addr_Indirect_Static || addressing == ParameterState.Addr_Indirect_Dynamic){
 
-                MainController.getInstance().sendMessageIndirect(message);
-                this.messagessends.add(message);
-                logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
-                System.out.print("Mensaje enviado \n");
-                sendMessage_Aux(message);
+                boolean send = MainController.getInstance().sendMessageIndirect(message);
+                if(send){
+                    this.messagessends.add(message);
+                    logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
+                    System.out.print("Mensaje enviado \n");
+                    sendMessage_Aux(message);
+                }
+                else{
+                    logger.log(new Log("Mensaje no enviado", Log.Type.ERROR,this.id));
+                    System.out.print("Mensaje enviado \n");
+                    sendMessage_Aux(message);
+                }
+                
             }
         }
         else{
-            logger.log(new Log("El proceso "+this.id+" esta bloqueado"));
+            logger.log(new Log("Mensaje no enviado", Log.Type.ERROR,this.id));
             System.out.print("El proceso esta bloqueado no puede enviar \n");
         }
     }

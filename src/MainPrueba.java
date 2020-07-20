@@ -31,6 +31,7 @@ public class MainPrueba {
         ParametersController.getInstance().setAddressing_Receive(ParameterState.Addr_Indirect_Dynamic);
         ParametersController.getInstance().setSyncronization_Send(ParameterState.Sync_Send_Blocking);
         ParametersController.getInstance().setSyncronization_Receive(ParameterState.Sync_Receive_ProofOfArrival);
+        ParametersController.setQueueSize(2);
         
         Mailbox m1 = new Mailbox("m1");
         MainController.getInstance().addMailbox(m1);
@@ -44,16 +45,21 @@ public class MainPrueba {
         Process p1 = new Process("1");
         Process p2 = new Process("2");
         Process p3 = new Process("3");
+        Process p4 = new Process("4");
         
         MainController.getInstance().getMailbox("m1").addProcessReceive(p1);
         MainController.getInstance().getMailbox("m1").addProcessReceive(p2);
         MainController.getInstance().getMailbox("m1").addProcessReceive(p3);
+        MainController.getInstance().getMailbox("m1").addProcessReceive(p4);
         
         MainController.getInstance().addProcess(p1);
         MainController.getInstance().addProcess(p2);
         MainController.getInstance().addProcess(p3);
+        MainController.getInstance().addProcess(p4);
         
         p1.sendMessage(message);
+        p2.sendMessage(message);
+        p3.sendMessage(message);
         
         p3.receiveMessage("m1");
         

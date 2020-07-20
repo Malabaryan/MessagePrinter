@@ -104,6 +104,10 @@ public class Mailbox {
         return null;
     }
     
+    public int getSize(){
+        return queue.size();
+    }
+    
     public String getMessages(){
         String messages2print = "";
         for(Message m: queue){
