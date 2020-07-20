@@ -17,17 +17,19 @@ import java.util.ArrayList;
 public class Process {
     public String id;
     public Boolean state;
+    public Boolean waiting;
     public ArrayList<Message> messagessends;
     public ArrayList<Message> messagesreceives;
 
     public Process(String id) {
         this.id = id;
         this.state = false;
+        this.waiting = false;
         this.messagessends = new ArrayList<Message>();
         this.messagesreceives = new ArrayList<Message>();
     }
     
-    public void sendMessage_Aux(){
+    public void sendMessage_Aux(Message message){
         Logger logger = Logger.getInstance();
         if(this.state == true){
             logger.log(new Log("El proceso esta bloqueado", Log.Type.STATE,this.id));
@@ -35,6 +37,7 @@ public class Process {
         }
         else{
             ParameterState sync = ParametersController.getSyncronization_Send();
+            ParameterState syncreceive = ParametersController.getSyncronization_Receive();
             if(sync == ParameterState.Sync_Send_Blocking){
                 state = true;
                 logger.log(new Log("El proceso quedo bloqueado", Log.Type.STATE,this.id));
@@ -44,6 +47,27 @@ public class Process {
                 state = false;
                 logger.log(new Log("El proceso no quedo bloqueado", Log.Type.STATE,this.id));
                 System.out.print("El proceso no se ha bloqueado \n");
+            }
+            
+            ParameterState addressing = ParametersController.getAddressing_Send();
+            if(addressing == ParameterState.Addr_Direct_Send){
+                Process process = MainController.getInstance().getProcess(message.getDestinationID());
+                if(process!=null){
+                    if(syncreceive == ParameterState.Sync_Receive_ProofOfArrival && process.getWaiting()==true){
+                        process.receiveMessage(this.id);
+                    }
+                }
+            }
+            else{
+                Mailbox mailbox = MainController.getInstance().getMailbox(message.getDestinationID());
+                if(mailbox!=null){
+                    if(syncreceive == ParameterState.Sync_Receive_ProofOfArrival && mailbox.findWaiting()==true){
+                        Process process = MainController.getInstance().getProcess(mailbox.findWaitingProcess());
+                        if(process!=null){
+                            process.receiveMessage(message.getDestinationID());
+                        }
+                    }
+                }
             }
         }
     }
@@ -59,19 +83,27 @@ public class Process {
                 logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
                 System.out.print("Mensaje enviado \n");
 
-                sendMessage_Aux();
+                sendMessage_Aux(message);
             }
             else if(addressing == ParameterState.Addr_Indirect_Static || addressing == ParameterState.Addr_Indirect_Dynamic){
 
-                MainController.getInstance().sendMessageIndirect(message);
-                this.messagessends.add(message);
-                logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
-                System.out.print("Mensaje enviado \n");
-                sendMessage_Aux();
+                boolean send = MainController.getInstance().sendMessageIndirect(message);
+                if(send){
+                    this.messagessends.add(message);
+                    logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
+                    System.out.print("Mensaje enviado \n");
+                    sendMessage_Aux(message);
+                }
+                else{
+                    logger.log(new Log("Mensaje no enviado", Log.Type.ERROR,this.id));
+                    System.out.print("Mensaje enviado \n");
+                    sendMessage_Aux(message);
+                }
+                
             }
         }
         else{
-            logger.log(new Log("El proceso "+this.id+" esta bloqueado"));
+            logger.log(new Log("Mensaje no enviado", Log.Type.ERROR,this.id));
             System.out.print("El proceso esta bloqueado no puede enviar \n");
         }
     }
@@ -82,7 +114,7 @@ public class Process {
         Message messagereturn = null;
         Logger logger = Logger.getInstance();
         if(addressing == ParameterState.Addr_Direct_Receive_Explicit){
-            messagereturn = MainController.getInstance().receiveMessageDirectExplicit(ID);
+            messagereturn = MainController.getInstance().receiveMessageDirectExplicit(ID,this.id);
         }
         else if(addressing == ParameterState.Addr_Direct_Receive_Implicit){
             messagereturn = MainController.getInstance().receiveMessageDirectImplicit(this.id);
@@ -101,7 +133,7 @@ public class Process {
     
     public void receiveMessage(String ID){
         Logger logger = Logger.getInstance();
-        if(this.state){
+        if(state==true){
             logger.log(new Log("El proceso esta bloqueado no puede recibir", Log.Type.STATE,this.id));
             System.out.print("El proceso esta bloqueado no puede recibir \n");
         } else {
@@ -132,35 +164,40 @@ public class Process {
                 }
             }
             else if(sync == ParameterState.Sync_Receive_ProofOfArrival){
-                boolean a = true;
-                while(a){
-                    Message messagereturn = receiveMessage_Aux(ID);
-                    if(messagereturn==null){
-                        a = true;
-                        System.out.print("El proceso se quedo buscando recibiendo \n");
-                    }
-                    else{
-                        a = false;
-                        this.messagesreceives.add(messagereturn);
-                        logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
-                        System.out.print("El proceso si lo encontro recibiendo \n");
-                        if(syncsend == ParameterState.Sync_Send_Blocking){
-                            MainController.getInstance().unlockprocess(messagereturn.getSourceID());
-                            logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
-                            System.out.print("Se ha desbloqueado el proceso: " + messagereturn.getSourceID()+ "\n");
-                        }
+                Message messagereturn = receiveMessage_Aux(ID);
+                if(messagereturn==null){
+                    this.waiting = true;
+                    logger.log(new Log("El proceso esta esperando", Log.Type.STATE,this.id));
+                    System.out.print("El proceso se quedo buscando recibiendo \n");
+                }
+                
+                else{
+                    this.messagesreceives.add(messagereturn);
+                    logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
+                    System.out.print("El proceso si lo encontro recibiendo \n");
+                    if(syncsend == ParameterState.Sync_Send_Blocking){
+                        MainController.getInstance().unlockprocess(messagereturn.getSourceID());
+                        logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
+                        System.out.print("Se ha desbloqueado el proceso: " + messagereturn.getSourceID()+ "\n");
                     }
                 }
             }
             else{
                 state = false;
                 Message messagereturn = receiveMessage_Aux(ID);
-                logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
-                System.out.print("El proceso no se ha bloqueado recibiendo \n");
-                if(syncsend == ParameterState.Sync_Send_Blocking){
-                    MainController.getInstance().unlockprocess(messagereturn.getSourceID());
-                    logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
-                    System.out.print("Se ha desbloqueado el proceso: " + messagereturn.getSourceID()+ "\n");
+                if(messagereturn!=null){
+                    logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
+                    System.out.print("El proceso no se ha bloqueado recibiendo \n");
+                    if(syncsend == ParameterState.Sync_Send_Blocking){
+                        MainController.getInstance().unlockprocess(messagereturn.getSourceID());
+                        logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
+                        System.out.print("Se ha desbloqueado el proceso: " + messagereturn.getSourceID()+ "\n");
+                    }
+                }
+                else{
+                    logger.log(new Log("No hay mensajes por recibir", Log.Type.ERROR,this.id));
+                    logger.log(new Log("El proceso no se ha bloqueado", Log.Type.STATE,this.id));
+                    System.out.print("El proceso no se ha bloqueado \n");
                 }
             }
         }
@@ -176,6 +213,14 @@ public class Process {
 
     public void setState(Boolean state) {
         this.state = state;
+    }
+
+    public Boolean getWaiting() {
+        return waiting;
+    }
+    
+    public void setWaiting(Boolean waiting) {
+        this.waiting = waiting;
     }
     
     @Override

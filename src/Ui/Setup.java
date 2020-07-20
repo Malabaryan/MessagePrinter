@@ -56,7 +56,6 @@ public class Setup extends javax.swing.JFrame {
         r_addresDirectExplicit = new javax.swing.JRadioButton();
         r_addressIndirectStatic = new javax.swing.JRadioButton();
         r_addreIndirectdynamic = new javax.swing.JRadioButton();
-        jLabel15 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -71,12 +70,12 @@ public class Setup extends javax.swing.JFrame {
         btn_simulationStart = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel26 = new javax.swing.JLabel();
-        spin_noProcesses = new javax.swing.JSpinner();
         jLabel27 = new javax.swing.JLabel();
         spin_fixed = new javax.swing.JSpinner();
         spin_maxQueueLenght = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_addProcess = new javax.swing.JButton();
+        btn_addMailbox = new javax.swing.JButton();
+        btn_addPrinter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 720));
@@ -242,11 +241,6 @@ public class Setup extends javax.swing.JFrame {
         getContentPane().add(r_addreIndirectdynamic);
         r_addreIndirectdynamic.setBounds(270, 440, 21, 21);
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel15.setText("No. Processes");
-        getContentPane().add(jLabel15);
-        jLabel15.setBounds(430, 160, 180, 20);
-
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("Format");
         getContentPane().add(jLabel19);
@@ -339,10 +333,6 @@ public class Setup extends javax.swing.JFrame {
         getContentPane().add(jLabel26);
         jLabel26.setBounds(80, 70, 180, 20);
 
-        spin_noProcesses.setValue(8);
-        getContentPane().add(spin_noProcesses);
-        spin_noProcesses.setBounds(580, 160, 80, 20);
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel27.setText("Max Queue Lenght");
         getContentPane().add(jLabel27);
@@ -352,23 +342,32 @@ public class Setup extends javax.swing.JFrame {
         getContentPane().add(spin_maxQueueLenght);
         spin_maxQueueLenght.setBounds(580, 200, 80, 20);
 
-        jButton1.setText("Add Process");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_addProcess.setText("Add Process");
+        btn_addProcess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_addProcessActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(440, 470, 250, 23);
+        getContentPane().add(btn_addProcess);
+        btn_addProcess.setBounds(440, 470, 250, 23);
 
-        jButton2.setText("Add Mailbox");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_addMailbox.setText("Add Mailbox");
+        btn_addMailbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_addMailboxActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(440, 500, 250, 23);
+        getContentPane().add(btn_addMailbox);
+        btn_addMailbox.setBounds(440, 500, 250, 23);
+
+        btn_addPrinter.setText("Add Printer");
+        btn_addPrinter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addPrinterActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_addPrinter);
+        btn_addPrinter.setBounds(440, 440, 250, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -408,7 +407,7 @@ public class Setup extends javax.swing.JFrame {
 
     private void btn_simulationStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simulationStartActionPerformed
         // TODO add your handling code here:
-        this.controller.startUpdateSimulation((int)this.spin_fixed.getValue(),(int)this.spin_noProcesses.getValue(),(int)this.spin_maxQueueLenght.getValue());
+        this.controller.startUpdateSimulation((int)this.spin_fixed.getValue(),(int)this.spin_maxQueueLenght.getValue());
         this.controller.showMainWindow();
     }//GEN-LAST:event_btn_simulationStartActionPerformed
 
@@ -449,29 +448,34 @@ public class Setup extends javax.swing.JFrame {
         ParametersController.setSyncronization_Send(ParameterState.Sync_Send_NonBlocking);
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_addProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addProcessActionPerformed
         // TODO add your handling code here:
         this.controller.showAddProcess();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_addProcessActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_addMailboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addMailboxActionPerformed
         // TODO add your handling code here:
         this.controller.showAddMailbox();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_addMailboxActionPerformed
+
+    private void btn_addPrinterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addPrinterActionPerformed
+        // TODO add your handling code here:
+        this.controller.showAddPrinter();
+    }//GEN-LAST:event_btn_addPrinterActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_addMailbox;
+    private javax.swing.JButton btn_addPrinter;
+    private javax.swing.JButton btn_addProcess;
     private javax.swing.JButton btn_simulationStart;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -511,6 +515,5 @@ public class Setup extends javax.swing.JFrame {
     private javax.swing.ButtonGroup radiogroup_syncreceive;
     private javax.swing.JSpinner spin_fixed;
     private javax.swing.JSpinner spin_maxQueueLenght;
-    private javax.swing.JSpinner spin_noProcesses;
     // End of variables declaration//GEN-END:variables
 }

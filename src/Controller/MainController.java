@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import Model.Process;
 import Model.Mailbox;
 import Model.Message;
+import Model.Printer;
 /**
  *
  * @author Bryan Hernandez
@@ -21,13 +22,19 @@ public class MainController {
     
 
     static MainController maincontroller;
+    
     static ArrayList<Process> processes;
     static ArrayList<Mailbox> mailboxes;
+    static ArrayList<Printer> printers;
+    
     static ArrayList<Message> messagespostsend;
+
 
     private MainController() {
         processes = new ArrayList<Process>();
         mailboxes = new ArrayList<Mailbox>();
+        printers = new ArrayList<Printer>();
+        
         messagespostsend = new ArrayList<Message>();
     }
     
@@ -42,6 +49,11 @@ public class MainController {
         return processes;
     }
 
+    public ArrayList<Printer> getPrinters() {
+        return printers;
+    }
+    
+
     public ArrayList<Mailbox> getMailboxes() {
         return mailboxes;
     }
@@ -49,6 +61,15 @@ public class MainController {
     public Mailbox getMailbox(String ID){
         for(Mailbox m:mailboxes){
             if(m.getId().equals(ID)){
+                return m;
+            }
+        }
+        return null;
+    }
+    
+    public Printer getPrinter(String ID){
+        for(Printer m: printers){
+            if(m.getID().equals(ID)){
                 return m;
             }
         }
@@ -70,8 +91,14 @@ public class MainController {
         System.out.println("Amount of Mailboxes: " + mailboxes.size());
     }
     
+    public void addPrinter(Printer printer){
+        printers.add(printer);
+        System.out.println("Amount of Printers: " + printers.size());
+    }
+    
     public void addProcess(Process process){
         processes.add(process);
+        System.out.println("Amount of Processes: " + processes.size());
     }
     
     public void sendMessageDirect(Message message){
@@ -79,14 +106,22 @@ public class MainController {
         System.out.print(messagespostsend.size()+ "\n");
     }
     
-    public void sendMessageIndirect(Message message){
+    public boolean sendMessageIndirect(Message message){
         Mailbox mailbox = getMailbox(message.getDestinationID());
-        mailbox.addMessage(message);
+        if(mailbox.getSize()>=ParametersController.getQueueSize()){
+            Logger logger = Logger.getInstance();
+            logger.log(new Log("El tamaño de la cola llego al limite", Log.Type.ERROR,mailbox.getId()));
+            return false;
+        }
+        else{
+            mailbox.addMessage(message);
+            return true;
+        }
     }
     
-    public Message receiveMessageDirectExplicit(String ID){
+    public Message receiveMessageDirectExplicit(String IDS, String IDD){
         for(int i=0;i<messagespostsend.size();i++){
-            if(messagespostsend.get(i).getSourceID().equals(ID)){
+            if(messagespostsend.get(i).getSourceID().equals(IDS) && messagespostsend.get(i).getDestinationID().equals(IDD)){
                 Message message = messagespostsend.get(i);
                 messagespostsend.remove(i);
                 System.out.print(messagespostsend.size() + "\n");
@@ -112,6 +147,10 @@ public class MainController {
         Mailbox mailbox = getMailbox(ID);
         System.out.print(" Va por aca \n");
         return mailbox.nextMessage();
+    }
+
+    public ArrayList<Message> getMessagespostsend() {
+        return messagespostsend;
     }
   
     public void executeCommand(String text) {

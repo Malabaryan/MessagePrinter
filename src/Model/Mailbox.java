@@ -28,7 +28,7 @@ public class Mailbox {
     
     public void addProcessReceive(Process process){
         this.receiveprocess.add(process);
-        System.out.print(receiveprocess.size());
+        System.out.print("Tamaño de Process Receive: "+ receiveprocess.size()+" ");
     }
 
     public String getId() {
@@ -50,6 +50,7 @@ public class Mailbox {
     
     public boolean processBelongs(String ID){
         for(Process p:receiveprocess){
+            System.out.print(p.getId()+",");
             if(p.getId().equals(ID)){
                 return true;
             }
@@ -58,7 +59,9 @@ public class Mailbox {
     }
     
     public Message nextMessage(){
+        System.out.print("Tamaño de Process Receive: "+ receiveprocess.size()+" ");
         Message nextMessage = null;
+        System.out.print("Tamaño cola: " + queue.size());
         for (Message msg : queue){
             if (ParametersController.getQueueStrategy() == ParameterState.Queue_Priority){
                 if (nextMessage == null || nextMessage.getPriority() < msg.getPriority()){
@@ -79,6 +82,30 @@ public class Mailbox {
     @Override
     public String toString(){
         return id;
+    }
+    
+    public boolean findWaiting(){
+        System.out.print("Tamaño de Process Receive: "+ receiveprocess.size()+" ");
+        for(Process p:receiveprocess){
+            if(p.getWaiting()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public String findWaitingProcess(){
+        System.out.print("Tamaño de Process Receive: "+ receiveprocess.size()+" ");
+        for(Process p:receiveprocess){
+            if(p.getWaiting()==true){
+                return p.getId();
+            }
+        }
+        return null;
+    }
+    
+    public int getSize(){
+        return queue.size();
     }
     
     public String getMessages(){
