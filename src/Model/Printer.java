@@ -35,12 +35,10 @@ public class Printer {
     
     public void addProcessReceive(Process process){
         this.receiveprocess.add(process);
-        System.out.print(receiveprocess.size());
     }
     
     public void addMessage(Message message){
         queue.add(message);
-        System.out.print(queue.size());
     }
     
     @Override
