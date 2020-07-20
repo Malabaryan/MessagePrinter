@@ -5,17 +5,20 @@
  */
 package Ui;
 
+import Model.Printer;
+
 /**
  *
  * @author Kenneth
  */
-public class PrinterStatus extends javax.swing.JDialog {
+public class PrinterStatus extends javax.swing.JFrame {
 
+    private Printer selectedPrinter;
+    
     /**
-     * Creates new form PrintDialog
+     * Creates new form PrinterStatus
      */
-    public PrinterStatus(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PrinterStatus() {
         initComponents();
     }
 
@@ -29,20 +32,14 @@ public class PrinterStatus extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TX_QueueItems = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        printerQueueTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Printer Queue");
-        setLocationByPlatform(true);
-        setModal(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Printer Queue");
+        jLabel1.setText("Printer Status");
 
-        TX_QueueItems.setEditable(false);
-        TX_QueueItems.setColumns(20);
-        TX_QueueItems.setRows(5);
-        jScrollPane2.setViewportView(TX_QueueItems);
+        jScrollPane1.setViewportView(printerQueueTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,7 +48,7 @@ public class PrinterStatus extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -62,8 +59,8 @@ public class PrinterStatus extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -96,28 +93,40 @@ public class PrinterStatus extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(PrinterStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the dialog */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PrinterStatus dialog = new PrinterStatus(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new PrinterStatus().setVisible(true);
             }
         });
     }
+    
+    public void setSelectedPrinter(Printer printer){
+        this.selectedPrinter = printer;
+        if (selectedPrinter != null)
+            updateQueueTable();
+    }
+    
+    public void updateQueueTable() {
+        if (selectedPrinter != null){
+            try {
+                javax.swing.table.DefaultTableModel model =
+                        new javax.swing.table.DefaultTableModel(
+                            selectedPrinter.queueToTable(),
+                        new String [] {
+                            "Printer ID", "Content"
+                        }
+                );
+                printerQueueTable.setModel(model);
+                
+            } catch (Exception e){}
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea TX_QueueItems;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable printerQueueTable;
     // End of variables declaration//GEN-END:variables
 }
