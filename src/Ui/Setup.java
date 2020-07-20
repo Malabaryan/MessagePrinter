@@ -76,6 +76,7 @@ public class Setup extends javax.swing.JFrame {
         btn_addProcess = new javax.swing.JButton();
         btn_addMailbox = new javax.swing.JButton();
         btn_addPrinter = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 720));
@@ -165,7 +166,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(280, 100, 21, 21);
+        jRadioButton1.setBounds(280, 100, 28, 28);
 
         radiogroup_syncreceive.add(r_syncReceiProofOFArrival);
         r_syncReceiProofOFArrival.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +175,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_syncReceiProofOFArrival);
-        r_syncReceiProofOFArrival.setBounds(280, 230, 21, 21);
+        r_syncReceiProofOFArrival.setBounds(280, 230, 28, 28);
 
         radiogroup_syncreceive.add(r_syncReceNonBlock);
         r_syncReceNonBlock.addActionListener(new java.awt.event.ActionListener() {
@@ -183,7 +184,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_syncReceNonBlock);
-        r_syncReceNonBlock.setBounds(280, 210, 21, 21);
+        r_syncReceNonBlock.setBounds(280, 210, 28, 28);
 
         radiogroup_syncreceive.add(r_syncReceiveBlocking);
         r_syncReceiveBlocking.setSelected(true);
@@ -193,7 +194,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_syncReceiveBlocking);
-        r_syncReceiveBlocking.setBounds(280, 190, 21, 21);
+        r_syncReceiveBlocking.setBounds(280, 190, 28, 28);
 
         radiogroup_syncSend.add(jRadioButton5);
         jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +203,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jRadioButton5);
-        jRadioButton5.setBounds(280, 120, 21, 21);
+        jRadioButton5.setBounds(280, 120, 28, 28);
 
         radiogroup_addressing.add(r_addreDirectImplicit);
         r_addreDirectImplicit.addActionListener(new java.awt.event.ActionListener() {
@@ -211,7 +212,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_addreDirectImplicit);
-        r_addreDirectImplicit.setBounds(270, 380, 21, 21);
+        r_addreDirectImplicit.setBounds(270, 380, 28, 28);
 
         radiogroup_addressing.add(r_addresDirectExplicit);
         r_addresDirectExplicit.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +221,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_addresDirectExplicit);
-        r_addresDirectExplicit.setBounds(270, 360, 21, 21);
+        r_addresDirectExplicit.setBounds(270, 360, 28, 28);
 
         radiogroup_addressing.add(r_addressIndirectStatic);
         r_addressIndirectStatic.setSelected(true);
@@ -230,7 +231,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_addressIndirectStatic);
-        r_addressIndirectStatic.setBounds(270, 420, 21, 21);
+        r_addressIndirectStatic.setBounds(270, 420, 28, 28);
 
         radiogroup_addressing.add(r_addreIndirectdynamic);
         r_addreIndirectdynamic.addActionListener(new java.awt.event.ActionListener() {
@@ -239,7 +240,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_addreIndirectdynamic);
-        r_addreIndirectdynamic.setBounds(270, 440, 21, 21);
+        r_addreIndirectdynamic.setBounds(270, 440, 28, 28);
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("Format");
@@ -269,7 +270,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_lenghtVariable);
-        r_lenghtVariable.setBounds(220, 590, 21, 21);
+        r_lenghtVariable.setBounds(220, 590, 28, 28);
 
         radiogroup_lenght.add(r_lenghtFixed);
         r_lenghtFixed.addActionListener(new java.awt.event.ActionListener() {
@@ -278,7 +279,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_lenghtFixed);
-        r_lenghtFixed.setBounds(220, 570, 21, 21);
+        r_lenghtFixed.setBounds(220, 570, 28, 28);
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel22.setText("Queue");
@@ -303,7 +304,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_queueFifo);
-        r_queueFifo.setBounds(590, 90, 21, 21);
+        r_queueFifo.setBounds(590, 90, 28, 28);
 
         radiogroup_queue.add(r_queuePriority);
         r_queuePriority.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +313,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(r_queuePriority);
-        r_queuePriority.setBounds(590, 110, 21, 21);
+        r_queuePriority.setBounds(590, 110, 28, 28);
 
         btn_simulationStart.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btn_simulationStart.setText("Start Simulation");
@@ -322,7 +323,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_simulationStart);
-        btn_simulationStart.setBounds(520, 580, 160, 31);
+        btn_simulationStart.setBounds(520, 580, 160, 38);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator1);
@@ -338,9 +339,9 @@ public class Setup extends javax.swing.JFrame {
         getContentPane().add(jLabel27);
         jLabel27.setBounds(430, 200, 180, 20);
         getContentPane().add(spin_fixed);
-        spin_fixed.setBounds(250, 570, 80, 20);
+        spin_fixed.setBounds(250, 570, 80, 26);
         getContentPane().add(spin_maxQueueLenght);
-        spin_maxQueueLenght.setBounds(580, 200, 80, 20);
+        spin_maxQueueLenght.setBounds(580, 200, 80, 26);
 
         btn_addProcess.setText("Add Process");
         btn_addProcess.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +350,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_addProcess);
-        btn_addProcess.setBounds(440, 470, 250, 23);
+        btn_addProcess.setBounds(440, 470, 250, 32);
 
         btn_addMailbox.setText("Add Mailbox");
         btn_addMailbox.addActionListener(new java.awt.event.ActionListener() {
@@ -358,7 +359,7 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_addMailbox);
-        btn_addMailbox.setBounds(440, 500, 250, 23);
+        btn_addMailbox.setBounds(440, 500, 250, 32);
 
         btn_addPrinter.setText("Add Printer");
         btn_addPrinter.addActionListener(new java.awt.event.ActionListener() {
@@ -367,7 +368,16 @@ public class Setup extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_addPrinter);
-        btn_addPrinter.setBounds(440, 440, 250, 23);
+        btn_addPrinter.setBounds(440, 440, 250, 32);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(440, 580, 77, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -463,6 +473,11 @@ public class Setup extends javax.swing.JFrame {
         this.controller.showAddPrinter();
     }//GEN-LAST:event_btn_addPrinterActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new SetupHelp(this,true).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -470,6 +485,7 @@ public class Setup extends javax.swing.JFrame {
     private javax.swing.JButton btn_addPrinter;
     private javax.swing.JButton btn_addProcess;
     private javax.swing.JButton btn_simulationStart;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
