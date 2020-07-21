@@ -35,7 +35,6 @@ public class UiController {
     public UiController(MainController controller) {
         this.controller = MainController.getInstance();
         setup = new Setup(this);
-        help = new Help(this);
         addProcess = new AddProcess(this);
     }
 
@@ -78,6 +77,9 @@ public class UiController {
         if(mainWindow == null){
             mainWindow = new Window(this);
         }
+        this.mainWindow.fillMailboxes();
+        this.mainWindow.fillProcesses();
+        this.mainWindow.fillPrinters();
         this.mainWindow.setVisible(true);
     }
 

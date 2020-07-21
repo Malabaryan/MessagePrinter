@@ -47,4 +47,8 @@ public class Logger {
         }
         return logString;
     }
+    
+    public void clear(){
+        logs.clear();
+    }
 }

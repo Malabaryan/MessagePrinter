@@ -5,6 +5,7 @@
  */
 package Ui;
 
+import Controller.MainController;
 import Controller.ParameterState;
 import Controller.ParametersController;
 import Controller.UiController;
@@ -69,9 +70,9 @@ public class AddMailbox extends javax.swing.JFrame {
 
         jLabel1.setText("ID:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(40, 30, 34, 14);
+        jLabel1.setBounds(40, 30, 34, 16);
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(70, 30, 200, 20);
+        jTextField1.setBounds(70, 30, 200, 24);
 
         jButton1.setText("Add Mailbox");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +81,7 @@ public class AddMailbox extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(70, 340, 210, 23);
+        jButton1.setBounds(70, 340, 210, 32);
 
         /*
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -101,18 +102,18 @@ public class AddMailbox extends javax.swing.JFrame {
 
         jLabel2.setText("Process Destination");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 60, 200, 14);
+        jLabel2.setBounds(70, 60, 200, 16);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(70, 220, 200, 96);
+        jScrollPane2.setBounds(70, 220, 200, 83);
 
         jLabel3.setText("Processes selected");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(70, 200, 160, 14);
+        jLabel3.setBounds(70, 200, 160, 16);
 
         btn_cancel.setText("Cancel");
         btn_cancel.addActionListener(new java.awt.event.ActionListener() {
@@ -121,21 +122,21 @@ public class AddMailbox extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_cancel);
-        btn_cancel.setBounds(300, 340, 200, 23);
+        btn_cancel.setBounds(300, 340, 200, 32);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.controller.getController().addMailbox(new Model.Mailbox(this.jTextField1.getText()));
+        MainController.getInstance().addMailbox(new Model.Mailbox(this.jTextField1.getText()));
         String s = "";
         Iterator iterator = processesText.iterator();
         while(iterator.hasNext()){
             s = (String)iterator.next();
             if(!s.equals("")){
-                this.controller.getController().getMailbox(this.jTextField1.getText())
-                .addProcessReceive(this.controller.getController().getProcess(s));
+                MainController.getInstance().getMailbox(this.jTextField1.getText())
+                .addProcessReceive(MainController.getInstance().getProcess(s));
             }
         }
         this.jTextField1.setText("");

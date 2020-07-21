@@ -16,7 +16,7 @@ public class Log {
    
     public enum Type {
         SEND,
-        RECIEVE,
+        RECEIVE,
         ALERT,
         ACTION,
         UNSPECIFIED,
@@ -103,7 +103,7 @@ public class Log {
     private String getTypeString(){
         switch (getType()){
             case UNSPECIFIED:
-                return "UNSPECIFIED LOG TYPE";
+                return "INFO";
             default:
                 return(getType().name());
         }

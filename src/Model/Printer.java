@@ -38,7 +38,14 @@ public class Printer {
     }
     
     public void addMessage(Message message){
-        queue.add(message);
+        for (Process process : receiveprocess){
+            if (process.getId().equals(message.getSourceID())){
+                queue.add(message);
+                Logger.getInstance().log(new Log("Se envió a imprimir."));
+                return;
+            }
+        }
+        Logger.getInstance().log(new Log("El proceso no tiene acceso a este printer."));
     }
     
     @Override

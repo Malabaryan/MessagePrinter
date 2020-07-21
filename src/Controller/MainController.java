@@ -155,7 +155,7 @@ public class MainController {
         String[] commands = text.split("\n");
         Message msg;
         for(String str : commands) {
-            if (commands.length < 2) {
+            if (commands.length < 1) {
                 Logger.getInstance().log(new Log("Comando no valido: " + str, Log.Type.ERROR));
                 break;
             }
@@ -183,7 +183,7 @@ public class MainController {
                     case 4:
                         //SEND COMMAND send(Destination, Source, Message, Priority)
                         msg = new Message(parameters[1], parameters[0], parameters[2]);
-                        msg.setPriority(Integer.getInteger(parameters[0]));
+                        msg.setPriority(Integer.parseInt(parameters[3]));
                         Process process2 = getProcess(parameters[0]);
                         process2.sendMessage(msg);
                         break;

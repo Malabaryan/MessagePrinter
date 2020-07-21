@@ -77,7 +77,7 @@ public class Process {
             if(addressing == ParameterState.Addr_Direct_Send){
                 MainController.getInstance().sendMessageDirect(message);
                 this.messagessends.add(message);
-                logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
+                logger.log(new Log("Mensaje enviado: " + message.getMessageContent(), Log.Type.SEND,this.id));
 
                 sendMessage_Aux(message);
             }
@@ -86,7 +86,7 @@ public class Process {
                 boolean send = MainController.getInstance().sendMessageIndirect(message);
                 if(send){
                     this.messagessends.add(message);
-                    logger.log(new Log("Mensaje enviado", Log.Type.SEND,this.id));
+                    logger.log(new Log("Mensaje enviado: " + message.getMessageContent(), Log.Type.SEND,this.id));
                     sendMessage_Aux(message);
                 }
                 else{
@@ -141,7 +141,7 @@ public class Process {
                     this.state = false;
                     this.messagesreceives.add(messagereturn);
                     logger.log(new Log("El proceso esta desbloqueado", Log.Type.STATE,this.id));
-                    logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
+                    logger.log(new Log("Mensaje Recibido: " + messagereturn.getMessageContent(), Log.Type.RECEIVE,this.id));
                     if(syncsend == ParameterState.Sync_Send_Blocking){
                         MainController.getInstance().unlockprocess(messagereturn.getSourceID());
                         logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
@@ -157,7 +157,7 @@ public class Process {
                 
                 else{
                     this.messagesreceives.add(messagereturn);
-                    logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
+                    logger.log(new Log("Mensaje Recibido: " + messagereturn.getMessageContent(), Log.Type.RECEIVE,this.id));
                     if(syncsend == ParameterState.Sync_Send_Blocking){
                         MainController.getInstance().unlockprocess(messagereturn.getSourceID());
                         logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
@@ -168,7 +168,7 @@ public class Process {
                 state = false;
                 Message messagereturn = receiveMessage_Aux(ID);
                 if(messagereturn!=null){
-                    logger.log(new Log("Mensaje Recibido", Log.Type.RECIEVE,this.id));
+                    logger.log(new Log("Mensaje Recibido: " + messagereturn.getMessageContent(), Log.Type.RECEIVE,this.id));
                     if(syncsend == ParameterState.Sync_Send_Blocking){
                         MainController.getInstance().unlockprocess(messagereturn.getSourceID());
                         logger.log(new Log("Se ha desbloqueado el proceso", Log.Type.STATE,messagereturn.getSourceID()));
